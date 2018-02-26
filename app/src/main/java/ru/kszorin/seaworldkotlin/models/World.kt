@@ -26,12 +26,7 @@ class World {
         // create creatures and put them on the field
         for (species in creaturesNumber.keys) {
             for (i in 0 until creaturesNumber[species]!!) {
-                val pos = findFreePosition()
-                creaturesMap.put(creaturesIdCounter, when (species) {
-                    Creature.Companion.Species.ORCA -> Orca(creaturesIdCounter, pos)
-                    Creature.Companion.Species.PENGUIN -> Pinguin(creaturesIdCounter, pos)
-                })
-                Log.d(TAG, "${species.name} (id = $creaturesIdCounter) was created and put in [${pos.first}, ${pos.second}]")
+                creaturesMap.put(creaturesIdCounter, createCreatures(species, creaturesIdCounter, findFreePosition()))
                 creaturesIdCounter++;
             }
         }
