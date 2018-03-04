@@ -10,7 +10,7 @@ abstract class Creature(val id: Int, var pos: Pair<Int, Int>) : Comparable<Creat
 
     abstract val species: Species
     abstract val environs: Byte
-    var isAlive = true
+    var isExists = true
 
     abstract fun lifeStep()
 
@@ -23,9 +23,9 @@ abstract class Creature(val id: Int, var pos: Pair<Int, Int>) : Comparable<Creat
     }
 
     companion object {
-        enum class Species(val bmpId: Int) {
-            ORCA(R.drawable.orca),
-            PENGUIN(R.drawable.tux);
+        enum class Species(val bmpId: Int, val targets: Set<Species>) {
+            PENGUIN(R.drawable.tux, emptySet()),
+            ORCA(R.drawable.orca, setOf(Creature.Companion.Species.PENGUIN));
         }
     }
 

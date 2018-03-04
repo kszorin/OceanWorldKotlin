@@ -1,15 +1,25 @@
 package ru.kszorin.seaworldkotlin.models
 
-import android.util.Log
+import ru.kszorin.seaworldkotlin.SeaWorldApp
+import ru.kszorin.seaworldkotlin.array2dOfInt
 import java.util.*
+import javax.inject.Inject
 
 /**
  * Created on 24.02.2018.
  */
 class World {
+
+    init {
+        SeaWorldApp.Companion.modelsComponent.inject(this)
+    }
+
     private var creaturesNumber: MutableMap<Creature.Companion.Species, Int> = HashMap()
     private var creaturesIdCounter = 0
-    private var waterSpace = array2dOfInt(FIELD_SIZE_Y, FIELD_SIZE_X)
+
+    @Inject
+    lateinit var waterSpace: Array<IntArray>
+
     private var creaturesMap: MutableMap<Int, Creature> = TreeMap()
 
     fun reset() {
@@ -34,7 +44,7 @@ class World {
 
     fun nextStep() {
         for (creature in creaturesMap.values.sortedWith(kotlin.Comparator({ t1, t2 -> t1.compareTo(t2) }))) {
-            if (creature.isAlive) {
+            if (creature.isExists) {
                 creature.lifeStep()
             }
         }
@@ -54,13 +64,10 @@ class World {
 
     companion object {
         private val TAG = "World"
-        private val FIELD_SIZE_X = 10
-        private val FIELD_SIZE_Y = 15
+        val FIELD_SIZE_X = 10
+        val FIELD_SIZE_Y = 15
         private val ORCAS_PERCENT_FILLING = 5
         private val PENGUINS_PERCENT_FILLING = 100 - ORCAS_PERCENT_FILLING
         private val FREE_WATER_CODE = -1
     }
 }
-
-fun array2dOfInt(sizeOuter: Int, sizeInner: Int): Array<IntArray>
-        = Array(sizeOuter) { IntArray(sizeInner) }

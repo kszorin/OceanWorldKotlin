@@ -1,0 +1,21 @@
+package ru.kszorin.seaworldkotlin.di.modules
+
+import dagger.Module
+import dagger.Provides
+import ru.kszorin.seaworldkotlin.array2dOfInt
+import javax.inject.Singleton
+
+/**
+ * Created on 04.03.2018.
+ */
+@Module
+class WorldModule(fieldSizeX: Int, fieldSizeY: Int) {
+
+    private val field = array2dOfInt(fieldSizeX, fieldSizeY)
+
+    @Provides
+    @Singleton
+    fun provideWaterSpace(): Array<IntArray> {
+        return field
+    }
+}

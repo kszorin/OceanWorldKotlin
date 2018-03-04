@@ -22,6 +22,10 @@ android {
     }
 }
 
+kapt {
+    generateStubs = true
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
@@ -34,6 +38,10 @@ dependencies {
     compile 'com.arello-mobile:moxy:1.5.3'
     compile 'com.arello-mobile:moxy-android:1.5.3'
     kapt 'com.arello-mobile:moxy-compiler:1.5.3'
+
+    // Dagger2
+    compile 'com.google.dagger:dagger-android:2.11'
+    kapt 'com.google.dagger:dagger-compiler:2.11'
 
     // Stetho (DB diagnostic)
     compile 'com.facebook.stetho:stetho:1.5.0'
