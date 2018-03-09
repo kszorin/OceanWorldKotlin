@@ -24,6 +24,6 @@ class SeaWorldApp : Application() {
     }
 
     companion object {
-        lateinit var modelsComponent: ModelsComponent
+        var modelsComponent: ModelsComponent? = null
     }
 }

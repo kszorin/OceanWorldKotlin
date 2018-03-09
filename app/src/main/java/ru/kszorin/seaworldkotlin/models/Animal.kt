@@ -1,5 +1,6 @@
 package ru.kszorin.seaworldkotlin.models
 
+import android.util.Log
 import ru.kszorin.seaworldkotlin.SeaWorldApp
 import ru.kszorin.seaworldkotlin.models.behaviour.IEatingBehaviour
 import ru.kszorin.seaworldkotlin.models.behaviour.IMovingBehaviour
@@ -11,6 +12,7 @@ import javax.inject.Inject
  * Created on 23.02.2018.
  */
 abstract class Animal(id: Int, pos: Pair<Int, Int>) : Creature(id, pos) {
+    val TAG = "Animal"
 
     init {
         SeaWorldApp.modelsComponent?.inject(this)
@@ -67,13 +69,14 @@ abstract class Animal(id: Int, pos: Pair<Int, Int>) : Creature(id, pos) {
         }
 
         //search suitable positions
-        var foundPositions = mutableListOf<Pair<Int, Int>>()
+        val foundPositions = mutableListOf<Pair<Int, Int>>()
         for (i in beginRangeBypassY..endRangeBypassY) {
             for (j in beginRangeBypassX..endRangeBypassX) {
                 if (i == pos.second && j == pos.first) {
                     continue
                 } else {
                     if (conditionForAddPosition.apply(waterSpace[i][j])) {
+                        Log.d(TAG, "x = $j, y = $i, value = ${waterSpace[i][j]}")
                         foundPositions.add(Pair(j, i))
                     }
                 }
