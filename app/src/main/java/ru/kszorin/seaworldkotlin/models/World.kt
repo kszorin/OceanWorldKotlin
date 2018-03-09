@@ -11,7 +11,7 @@ import javax.inject.Inject
 class World {
 
     init {
-        SeaWorldApp.Companion.modelsComponent.inject(this)
+        SeaWorldApp.Companion.modelsComponent?.inject(this)
     }
 
     private var creaturesNumber: MutableMap<Creature.Companion.Species, Int> = HashMap()
@@ -20,7 +20,8 @@ class World {
     @Inject
     lateinit var waterSpace: Array<IntArray>
 
-    private var creaturesMap: MutableMap<Int, Creature> = TreeMap()
+    @Inject
+    lateinit var creaturesMap: MutableMap<Int, Creature>
 
     fun reset() {
         creaturesNumber.put(Creature.Companion.Species.ORCA, FIELD_SIZE_X * FIELD_SIZE_Y * ORCAS_PERCENT_FILLING / 100)
@@ -68,6 +69,6 @@ class World {
         val FIELD_SIZE_Y = 15
         private val ORCAS_PERCENT_FILLING = 5
         private val PENGUINS_PERCENT_FILLING = 100 - ORCAS_PERCENT_FILLING
-        private val FREE_WATER_CODE = -1
+        val FREE_WATER_CODE = -1
     }
 }
