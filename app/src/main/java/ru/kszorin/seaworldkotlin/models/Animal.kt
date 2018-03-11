@@ -31,14 +31,26 @@ abstract class Animal(id: Int, pos: Pair<Int, Int>) : Creature(id, pos) {
     abstract val movingBehaviour: IMovingBehaviour
     abstract val reproductionBehaviour: IReproductionBehaviour
 
-    abstract fun createBaby()
+    /**
+     * Creates new animal.
+     * @param pos position in which new animal will be created
+     * @param id id of new animal
+     */
+    abstract fun createBaby(id: Int, pos: Pair<Int, Int>)
 
-
+    /**
+     * @return list of suitable places for moving
+     */
     fun findPlacesForMoving(): List<Pair<Int, Int>> {
-        return findInEnvirons(Function { potentialPosition -> World.FREE_WATER_CODE == potentialPosition })
+        // condition: position is not occupied by anyone
+        return findInEnvirons(Function { potentialPositionValue -> World.FREE_WATER_CODE == potentialPositionValue })
     }
 
+    /**
+     * @return list of suitable targets for hunting
+     */
     fun findVictims(): List<Pair<Int, Int>> {
+        // condition: position is occupied by animals-victims
         return findInEnvirons(Function { potentialTargetId ->
             potentialTargetId != World.FREE_WATER_CODE
                     && species.targets.contains(creaturesMap[potentialTargetId]?.species)

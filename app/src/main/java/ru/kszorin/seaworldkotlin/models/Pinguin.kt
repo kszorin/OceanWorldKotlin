@@ -25,7 +25,7 @@ class Pinguin(id : Int, pos : Pair<Int, Int>) : Animal(id, pos) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun createBaby() {
+    override fun createBaby(id: Int, pos: Pair<Int, Int>) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
