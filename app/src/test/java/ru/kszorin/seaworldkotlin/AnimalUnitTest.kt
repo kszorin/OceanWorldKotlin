@@ -1,6 +1,7 @@
 package ru.kszorin.seaworldkotlin
 
 import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -17,15 +18,16 @@ import java.util.*
 @RunWith(Parameterized::class)
 class AnimalUnitTest(val x: Int, val y: Int) {
 
-    val orca = Orca(1, Pair(x, y))
+    private val orca = Orca(0, Pair(x, y))
 
     init {
         orca.waterSpace = array2dOfInt(3, 3)
         orca.waterSpace[0] = intArrayOf(World.FREE_WATER_CODE, World.FREE_WATER_CODE, World.FREE_WATER_CODE)
-        orca.waterSpace[1] = intArrayOf(World.FREE_WATER_CODE,          1           , World.FREE_WATER_CODE)
-        orca.waterSpace[2] = intArrayOf(        2,             World.FREE_WATER_CODE,           3)
+        orca.waterSpace[1] = intArrayOf(World.FREE_WATER_CODE, 1, World.FREE_WATER_CODE)
+        orca.waterSpace[2] = intArrayOf(2, World.FREE_WATER_CODE, 3)
 
         orca.creaturesMap = mutableMapOf()
+        orca.creaturesMap.put(0, Orca(0, Pair(x, y)))
         orca.creaturesMap.put(1, Pinguin(1, Pair(0, 1)))
         orca.creaturesMap.put(2, Pinguin(2, Pair(2, 1)))
         orca.creaturesMap.put(3, Orca(2, Pair(2, 2)))
@@ -35,7 +37,7 @@ class AnimalUnitTest(val x: Int, val y: Int) {
     fun testFindPlacesfoMoving() {
 
         val size = orca.findPlacesForMoving().size
-        assert(size > 0)
+        assertTrue(size > 0)
         println("x = $x, y = $y, founded positions = $size")
     }
 
@@ -43,9 +45,16 @@ class AnimalUnitTest(val x: Int, val y: Int) {
     fun testFindVictims() {
 
         val size = orca.findVictims().size
-        assert(size > 0)
+        assertTrue(size > 0)
         println("x = $x, y = $y, founded victims = $size")
     }
+
+    @Test
+    fun testEnvironsMoving() {
+        val result = orca.movingBehaviour.move(orca, orca.findPlacesForMoving())
+        assertTrue(result)
+    }
+
 
     companion object {
         @JvmStatic
