@@ -1,16 +1,22 @@
 package ru.kszorin.seaworldkotlin
 
-import org.junit.Assert.assertNull
+import dagger.android.DaggerActivity
 import org.junit.Assert.assertTrue
+import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
 import org.junit.runners.Parameterized
-import ru.kszorin.seaworldkotlin.models.Animal
+
 import ru.kszorin.seaworldkotlin.models.Orca
 import ru.kszorin.seaworldkotlin.models.Pinguin
 import ru.kszorin.seaworldkotlin.models.World
 import java.util.*
+import ru.kszorin.seaworldkotlin.di.components.DaggerTestModelsComponent
+import ru.kszorin.seaworldkotlin.di.models.TestWorldModule
+import ru.kszorin.seaworldkotlin.models.Creature
+import javax.inject.Inject
+
 
 /**
  * Created on 09.03.2018.
@@ -18,24 +24,19 @@ import java.util.*
 @RunWith(Parameterized::class)
 class AnimalUnitTest(val x: Int, val y: Int) {
 
-    private val orca = Orca(0, Pair(x, y))
+    lateinit private var orca: Orca
 
-    init {
-        orca.waterSpace = array2dOfInt(3, 3)
-        orca.waterSpace[0] = intArrayOf(World.FREE_WATER_CODE, World.FREE_WATER_CODE, World.FREE_WATER_CODE)
-        orca.waterSpace[1] = intArrayOf(World.FREE_WATER_CODE,          1,           World.FREE_WATER_CODE)
-        orca.waterSpace[2] = intArrayOf(            2,         World.FREE_WATER_CODE,        3)
-
-        orca.creaturesMap = mutableMapOf()
-        orca.creaturesMap.put(0, Orca(0, Pair(x, y)))
-        orca.creaturesMap.put(1, Pinguin(1, Pair(1, 1)))
-        orca.creaturesMap.put(2, Pinguin(2, Pair(0, 2)))
-        orca.creaturesMap.put(3, Orca(3, Pair(2, 2)))
+    @Before
+    fun setTestComponent() {
+        val testModelsComponent = DaggerTestModelsComponent.builder().testWorldModule(TestWorldModule()).build()
+        SeaWorldApp.modelsComponent = testModelsComponent
+        orca =  Orca(0, Pair(x, y))
+        orca.creaturesMap.put(0, orca)
+        orca.waterSpace[y][x] = 0
     }
 
     @Test
-    fun testFindPlacesfoMoving() {
-
+    fun testFindPlacesforMoving() {
         val size = orca.findPlacesForMoving().size
         assertTrue(size > 0)
         println("x = $x, y = $y, founded positions = $size")

@@ -11,18 +11,19 @@ import javax.inject.Inject
  */
 class World {
 
-    init {
-        SeaWorldApp.Companion.modelsComponent?.inject(this)
-    }
-
     private var creaturesNumber: MutableMap<Creature.Companion.Species, Int> = HashMap()
-    private var creaturesIdCounter = 0
 
     @Inject
     lateinit var waterSpace: Array<IntArray>
 
     @Inject
     lateinit var creaturesMap: MutableMap<Int, Creature>
+
+    var creaturesIdCounter = 0
+
+    init {
+        SeaWorldApp.Companion.modelsComponent?.inject(this)
+    }
 
     fun reset() {
         creaturesNumber.put(Creature.Companion.Species.ORCA, FIELD_SIZE_X * FIELD_SIZE_Y * ORCAS_PERCENT_FILLING / 100)
