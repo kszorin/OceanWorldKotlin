@@ -36,7 +36,7 @@ abstract class Animal(id: Int, pos: Pair<Int, Int>) : Creature(id, pos) {
      * @param pos position in which new animal will be created
      * @param id id of new animal
      */
-    abstract fun createBaby(id: Int, pos: Pair<Int, Int>)
+    abstract fun createBaby(id: Int, pos: Pair<Int, Int>): Animal
 
     /**
      * @return list of suitable places for moving

@@ -14,7 +14,8 @@ import javax.inject.Singleton
 class WorldModule(fieldSizeX: Int, fieldSizeY: Int) {
 
     private val waterSpace = array2dOfInt(fieldSizeX, fieldSizeY)
-    private var creaturesMap: MutableMap<Int, Creature> = TreeMap()
+    private val creaturesMap: MutableMap<Int, Creature> = TreeMap()
+    private var creaturesIdCounter: Int = 0
 
     @Provides
     @Singleton
@@ -26,5 +27,11 @@ class WorldModule(fieldSizeX: Int, fieldSizeY: Int) {
     @Singleton
     fun provideCreaturesMap(): MutableMap<Int, Creature> {
         return creaturesMap
+    }
+
+    @Provides
+    @Singleton
+    fun provideCreaturesIdCounter(): Int {
+        return creaturesIdCounter
     }
 }

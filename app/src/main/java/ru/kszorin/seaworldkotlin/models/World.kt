@@ -5,6 +5,7 @@ import ru.kszorin.seaworldkotlin.SeaWorldApp
 import ru.kszorin.seaworldkotlin.array2dOfInt
 import java.util.*
 import javax.inject.Inject
+import javax.inject.Named
 
 /**
  * Created on 24.02.2018.
@@ -19,10 +20,11 @@ class World {
     @Inject
     lateinit var creaturesMap: MutableMap<Int, Creature>
 
-    var creaturesIdCounter = 0
+    @set:[Inject Named("creaturesIdCounter")]
+    var creaturesIdCounter: Int = 0
 
     init {
-        SeaWorldApp.Companion.modelsComponent?.inject(this)
+        SeaWorldApp.modelsComponent?.inject(this)
     }
 
     fun reset() {

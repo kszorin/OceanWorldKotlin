@@ -9,11 +9,12 @@ import ru.kszorin.seaworldkotlin.models.World
  */
 class Hunting: IEatingBehaviour {
     val TAG = "Hunting"
+
     override fun eat(animal: Animal, foundPositionsInEnvirons: List<Pair<Int, Int>>): Boolean {
         val pos = animal.pos
 
         if (foundPositionsInEnvirons.isNotEmpty()) {
-            // select random victim
+            // select random position
             val bufferRandomNum = (Math.random() * foundPositionsInEnvirons.size).toInt()
             val selectedFreePos = foundPositionsInEnvirons[bufferRandomNum]
 

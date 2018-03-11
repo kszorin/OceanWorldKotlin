@@ -1,21 +1,13 @@
 package ru.kszorin.seaworldkotlin
 
-import dagger.android.DaggerActivity
 import org.junit.Assert.assertTrue
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
-
-import ru.kszorin.seaworldkotlin.models.Orca
-import ru.kszorin.seaworldkotlin.models.Pinguin
-import ru.kszorin.seaworldkotlin.models.World
-import java.util.*
 import ru.kszorin.seaworldkotlin.di.components.DaggerTestModelsComponent
 import ru.kszorin.seaworldkotlin.di.models.TestWorldModule
-import ru.kszorin.seaworldkotlin.models.Creature
-import javax.inject.Inject
+import ru.kszorin.seaworldkotlin.models.Orca
 
 
 /**
@@ -59,6 +51,12 @@ class AnimalUnitTest(val x: Int, val y: Int) {
     @Test
     fun testHunting() {
         val result = orca.eatingBehaviour.eat(orca, orca.findVictims())
+        assertTrue(result)
+    }
+
+    @Test
+    fun testPeriodicReproduction() {
+        val result = orca.reproductionBehaviour.reproduce(orca, orca.findPlacesForMoving())
         assertTrue(result)
     }
 

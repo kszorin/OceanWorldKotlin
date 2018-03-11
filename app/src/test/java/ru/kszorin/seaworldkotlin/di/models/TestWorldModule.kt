@@ -17,6 +17,7 @@ import javax.inject.Singleton
 class TestWorldModule {
     private val waterSpace = array2dOfInt(3, 3)
     private var creaturesMap: MutableMap<Int, Creature> = TreeMap()
+    private var creaturesIdCounter = 4
 
     init {
         waterSpace[0] = intArrayOf(World.FREE_WATER_CODE, World.FREE_WATER_CODE, World.FREE_WATER_CODE)
@@ -38,6 +39,12 @@ class TestWorldModule {
     @Singleton
     fun provideCreaturesMap(): MutableMap<Int, Creature> {
         return creaturesMap
+    }
+
+    @Provides
+    @Singleton
+    fun provideCreaturesIdCounter(): Int {
+        return creaturesIdCounter
     }
 
 }
