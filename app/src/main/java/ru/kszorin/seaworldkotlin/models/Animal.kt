@@ -88,7 +88,7 @@ abstract class Animal(id: Int, pos: Pair<Int, Int>) : Creature(id, pos) {
                     continue
                 } else {
                     if (conditionForAddPosition.apply(waterSpace[i][j])) {
-                        Log.d(TAG, "x = $j, y = $i, value = ${waterSpace[i][j]}")
+                        Log.d(TAG, "x = $j, y = $i, id in this position = ${waterSpace[i][j]}")
                         foundPositions.add(Pair(j, i))
                     }
                 }

@@ -23,14 +23,14 @@ class AnimalUnitTest(val x: Int, val y: Int) {
     init {
         orca.waterSpace = array2dOfInt(3, 3)
         orca.waterSpace[0] = intArrayOf(World.FREE_WATER_CODE, World.FREE_WATER_CODE, World.FREE_WATER_CODE)
-        orca.waterSpace[1] = intArrayOf(World.FREE_WATER_CODE, 1, World.FREE_WATER_CODE)
-        orca.waterSpace[2] = intArrayOf(2, World.FREE_WATER_CODE, 3)
+        orca.waterSpace[1] = intArrayOf(World.FREE_WATER_CODE,          1,           World.FREE_WATER_CODE)
+        orca.waterSpace[2] = intArrayOf(            2,         World.FREE_WATER_CODE,        3)
 
         orca.creaturesMap = mutableMapOf()
         orca.creaturesMap.put(0, Orca(0, Pair(x, y)))
-        orca.creaturesMap.put(1, Pinguin(1, Pair(0, 1)))
-        orca.creaturesMap.put(2, Pinguin(2, Pair(2, 1)))
-        orca.creaturesMap.put(3, Orca(2, Pair(2, 2)))
+        orca.creaturesMap.put(1, Pinguin(1, Pair(1, 1)))
+        orca.creaturesMap.put(2, Pinguin(2, Pair(0, 2)))
+        orca.creaturesMap.put(3, Orca(3, Pair(2, 2)))
     }
 
     @Test
@@ -52,6 +52,12 @@ class AnimalUnitTest(val x: Int, val y: Int) {
     @Test
     fun testEnvironsMoving() {
         val result = orca.movingBehaviour.move(orca, orca.findPlacesForMoving())
+        assertTrue(result)
+    }
+
+    @Test
+    fun testHunting() {
+        val result = orca.eatingBehaviour.eat(orca, orca.findVictims())
         assertTrue(result)
     }
 
