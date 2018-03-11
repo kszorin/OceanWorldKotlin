@@ -22,8 +22,8 @@ class EnvironsMoving: IMovingBehaviour {
             val selectedFreePos = foundPositionsInEnvirons[bufferRandomNum]
 
             //move animal to new position
-            animal.waterSpace[selectedFreePos.first][selectedFreePos.second] = animal.waterSpace[pos.first][pos.second]
-            animal.waterSpace[pos.first][pos.second] = World.FREE_WATER_CODE
+            animal.waterSpace[selectedFreePos.second][selectedFreePos.first] = animal.waterSpace[pos.second][pos.first]
+            animal.waterSpace[pos.second][pos.first] = World.FREE_WATER_CODE
             animal.creaturesMap[animal.id]?.pos = selectedFreePos
             Log.d(TAG, "${animal.creaturesMap[animal.id]?.species?.name} (${animal.id}):" +
                     " [${pos.first}, ${pos.second}] -> [${selectedFreePos.first}, ${selectedFreePos.second}]")
