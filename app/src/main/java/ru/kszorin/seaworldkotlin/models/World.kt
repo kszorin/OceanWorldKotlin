@@ -1,5 +1,6 @@
 package ru.kszorin.seaworldkotlin.models
 
+import android.util.Log
 import ru.kszorin.seaworldkotlin.SeaWorldApp
 import ru.kszorin.seaworldkotlin.array2dOfInt
 import java.util.*
@@ -45,9 +46,7 @@ class World {
 
     fun nextStep() {
         for (creature in creaturesMap.values.sortedWith(kotlin.Comparator({ t1, t2 -> t1.compareTo(t2) }))) {
-            if (creature.isExists) {
-                creature.lifeStep()
-            }
+            creature.lifeStep()
         }
     }
 

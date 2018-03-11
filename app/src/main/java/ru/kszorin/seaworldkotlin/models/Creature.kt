@@ -10,7 +10,6 @@ abstract class Creature(val id: Int, var pos: Pair<Int, Int>) : Comparable<Creat
 
     abstract val species: Species
     abstract val environs: Byte
-    var isExists = true
 
     abstract fun lifeStep()
 
