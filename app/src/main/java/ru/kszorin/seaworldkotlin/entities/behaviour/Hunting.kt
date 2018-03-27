@@ -1,8 +1,8 @@
-package ru.kszorin.seaworldkotlin.models.behaviour
+package ru.kszorin.seaworldkotlin.entities.behaviour
 
 import android.util.Log
-import ru.kszorin.seaworldkotlin.models.Animal
-import ru.kszorin.seaworldkotlin.models.World
+import ru.kszorin.seaworldkotlin.entities.Animal
+import ru.kszorin.seaworldkotlin.entities.World
 
 /**
  * Created on 23.02.2018.

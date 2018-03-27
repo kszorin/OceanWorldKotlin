@@ -7,7 +7,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import ru.kszorin.seaworldkotlin.di.components.DaggerTestModelsComponent
 import ru.kszorin.seaworldkotlin.di.models.TestWorldModule
-import ru.kszorin.seaworldkotlin.models.Orca
+import ru.kszorin.seaworldkotlin.entities.Orca
 
 
 /**

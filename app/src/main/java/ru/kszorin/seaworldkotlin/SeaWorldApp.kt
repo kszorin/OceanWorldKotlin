@@ -4,7 +4,7 @@ import android.app.Application
 import ru.kszorin.seaworldkotlin.di.components.DaggerModelsComponent
 import ru.kszorin.seaworldkotlin.di.components.ModelsComponent
 import ru.kszorin.seaworldkotlin.di.modules.WorldModule
-import ru.kszorin.seaworldkotlin.models.World
+import ru.kszorin.seaworldkotlin.entities.World
 
 /**
  * Created on 04.03.2018.

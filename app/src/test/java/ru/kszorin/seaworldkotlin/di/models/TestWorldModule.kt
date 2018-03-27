@@ -3,10 +3,10 @@ package ru.kszorin.seaworldkotlin.di.models
 import dagger.Module
 import dagger.Provides
 import ru.kszorin.seaworldkotlin.array2dOfInt
-import ru.kszorin.seaworldkotlin.models.Creature
-import ru.kszorin.seaworldkotlin.models.Orca
-import ru.kszorin.seaworldkotlin.models.Pinguin
-import ru.kszorin.seaworldkotlin.models.World
+import ru.kszorin.seaworldkotlin.entities.Creature
+import ru.kszorin.seaworldkotlin.entities.Orca
+import ru.kszorin.seaworldkotlin.entities.Pinguin
+import ru.kszorin.seaworldkotlin.entities.World
 import java.util.*
 import javax.inject.Singleton
 

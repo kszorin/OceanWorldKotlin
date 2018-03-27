@@ -1,6 +1,6 @@
-package ru.kszorin.seaworldkotlin.models.behaviour
+package ru.kszorin.seaworldkotlin.entities.behaviour
 
-import ru.kszorin.seaworldkotlin.models.Animal
+import ru.kszorin.seaworldkotlin.entities.Animal
 
 /**
  * Created on 23.02.2018.

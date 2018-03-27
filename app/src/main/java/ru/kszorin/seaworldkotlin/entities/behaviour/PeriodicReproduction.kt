@@ -1,9 +1,8 @@
-package ru.kszorin.seaworldkotlin.models.behaviour
+package ru.kszorin.seaworldkotlin.entities.behaviour
 
 import android.util.Log
 import ru.kszorin.seaworldkotlin.SeaWorldApp
-import ru.kszorin.seaworldkotlin.models.Animal
-import ru.kszorin.seaworldkotlin.models.World
+import ru.kszorin.seaworldkotlin.entities.Animal
 import javax.inject.Inject
 import javax.inject.Named
 

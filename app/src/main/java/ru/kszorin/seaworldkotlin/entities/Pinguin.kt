@@ -1,8 +1,8 @@
-package ru.kszorin.seaworldkotlin.models
+package ru.kszorin.seaworldkotlin.entities
 
-import ru.kszorin.seaworldkotlin.models.behaviour.Diet
-import ru.kszorin.seaworldkotlin.models.behaviour.EnvironsMoving
-import ru.kszorin.seaworldkotlin.models.behaviour.PeriodicReproduction
+import ru.kszorin.seaworldkotlin.entities.behaviour.Diet
+import ru.kszorin.seaworldkotlin.entities.behaviour.EnvironsMoving
+import ru.kszorin.seaworldkotlin.entities.behaviour.PeriodicReproduction
 
 /**
  * Created on 23.02.2018.

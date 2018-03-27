@@ -1,4 +1,4 @@
-package ru.kszorin.seaworldkotlin.models
+package ru.kszorin.seaworldkotlin.entities
 
 import android.util.Log
 

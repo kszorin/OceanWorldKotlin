@@ -1,10 +1,10 @@
-package ru.kszorin.seaworldkotlin.models
+package ru.kszorin.seaworldkotlin.entities
 
 import android.util.Log
 import ru.kszorin.seaworldkotlin.SeaWorldApp
-import ru.kszorin.seaworldkotlin.models.behaviour.IEatingBehaviour
-import ru.kszorin.seaworldkotlin.models.behaviour.IMovingBehaviour
-import ru.kszorin.seaworldkotlin.models.behaviour.IReproductionBehaviour
+import ru.kszorin.seaworldkotlin.entities.behaviour.IEatingBehaviour
+import ru.kszorin.seaworldkotlin.entities.behaviour.IMovingBehaviour
+import ru.kszorin.seaworldkotlin.entities.behaviour.IReproductionBehaviour
 import java.util.function.Function
 import javax.inject.Inject
 

@@ -1,8 +1,6 @@
-package ru.kszorin.seaworldkotlin.models
+package ru.kszorin.seaworldkotlin.entities
 
-import android.util.Log
 import ru.kszorin.seaworldkotlin.SeaWorldApp
-import ru.kszorin.seaworldkotlin.array2dOfInt
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Named

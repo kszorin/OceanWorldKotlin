@@ -2,9 +2,9 @@ package ru.kszorin.seaworldkotlin.di.components
 
 import dagger.Component
 import ru.kszorin.seaworldkotlin.di.modules.WorldModule
-import ru.kszorin.seaworldkotlin.models.Animal
-import ru.kszorin.seaworldkotlin.models.World
-import ru.kszorin.seaworldkotlin.models.behaviour.PeriodicReproduction
+import ru.kszorin.seaworldkotlin.entities.Animal
+import ru.kszorin.seaworldkotlin.entities.World
+import ru.kszorin.seaworldkotlin.entities.behaviour.PeriodicReproduction
 import javax.inject.Singleton
 
 /**

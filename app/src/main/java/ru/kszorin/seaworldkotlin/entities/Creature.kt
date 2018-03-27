@@ -1,6 +1,5 @@
-package ru.kszorin.seaworldkotlin.models
+package ru.kszorin.seaworldkotlin.entities
 
-import android.graphics.Bitmap
 import ru.kszorin.seaworldkotlin.R
 
 /**

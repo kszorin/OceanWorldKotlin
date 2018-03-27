@@ -3,7 +3,7 @@ package ru.kszorin.seaworldkotlin.di.modules
 import dagger.Module
 import dagger.Provides
 import ru.kszorin.seaworldkotlin.array2dOfInt
-import ru.kszorin.seaworldkotlin.models.Creature
+import ru.kszorin.seaworldkotlin.entities.Creature
 import java.util.*
 import javax.inject.Singleton
 
