@@ -27,6 +27,8 @@ abstract class Animal(id: Int, pos: Pair<Int, Int>) : Creature(id, pos) {
     var age = 0
     var timeFromEating = 0
 
+    var reproductionPeriod = 0.toByte()
+
     abstract val eatingBehaviour: IEatingBehaviour
     abstract val movingBehaviour: IMovingBehaviour
     abstract val reproductionBehaviour: IReproductionBehaviour

@@ -6,7 +6,7 @@ import android.util.Log
  * Created on 26.02.2018.
  */
 fun createCreatures(species: Creature.Companion.Species, id: Int, pos: Pair<Int, Int>) : Creature {
-    val TAG = "World"
+    val TAG = "CreaturesFactory"
 
     val creature = when (species) {
         Creature.Companion.Species.ORCA -> Orca(id, pos)

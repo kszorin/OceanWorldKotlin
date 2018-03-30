@@ -39,7 +39,7 @@ class World {
         // create creatures and put them on the field
         for (species in creaturesNumber.keys) {
             for (i in 0 until creaturesNumber[species]!!) {
-                creaturesMap.put(creaturesIdCounter, createCreatures(species, creaturesIdCounter, findFreePosition()))
+                creaturesMap.put(creaturesIdCounter, createCreatures(species, creaturesIdCounter, occupyFreePosition(creaturesIdCounter)))
                 creaturesIdCounter++;
             }
         }
@@ -51,7 +51,7 @@ class World {
         }
     }
 
-    private fun findFreePosition(): Pair<Int, Int> {
+    private fun occupyFreePosition(id: Int): Pair<Int, Int> {
         var randomPos: Int
         var posCandidate: Pair<Int, Int>
 
@@ -59,6 +59,7 @@ class World {
             randomPos = (Math.random() * FIELD_SIZE_Y * FIELD_SIZE_X).toInt()
             posCandidate = Pair(randomPos % FIELD_SIZE_X, randomPos / FIELD_SIZE_X)
         } while (waterSpace[posCandidate.second][posCandidate.first] != FREE_WATER_CODE)
+        waterSpace[posCandidate.second][posCandidate.first] = id
 
         return posCandidate
     }
@@ -68,7 +69,7 @@ class World {
         val FIELD_SIZE_X = 10
         val FIELD_SIZE_Y = 15
         private val ORCAS_PERCENT_FILLING = 5
-        private val PENGUINS_PERCENT_FILLING = 100 - ORCAS_PERCENT_FILLING
+        private val PENGUINS_PERCENT_FILLING = 50
         val FREE_WATER_CODE = -1
     }
 }

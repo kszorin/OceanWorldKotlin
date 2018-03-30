@@ -9,11 +9,6 @@ import ru.kszorin.seaworldkotlin.entities.behaviour.PeriodicReproduction
  */
 class Pinguin(id : Int, pos : Pair<Int, Int>) : Animal(id, pos) {
 
-    companion object {
-        private val REPRODUCTION_PERIOD: Byte = 3
-        private val ENVIRONS: Byte = 1
-    }
-
     override val species = Species.PENGUIN
     override val environs : Byte = ENVIRONS
 
@@ -21,11 +16,20 @@ class Pinguin(id : Int, pos : Pair<Int, Int>) : Animal(id, pos) {
     override val movingBehaviour = EnvironsMoving()
     override val reproductionBehaviour = PeriodicReproduction()
 
+    init {
+        reproductionPeriod = REPRODUCTION_PERIOD
+    }
+
     override fun lifeStep() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun createBaby(id: Int, pos: Pair<Int, Int>): Animal {
         return Pinguin(id, pos)
+    }
+
+    companion object {
+        private val REPRODUCTION_PERIOD: Byte = 3
+        private val ENVIRONS: Byte = 1
     }
 }
