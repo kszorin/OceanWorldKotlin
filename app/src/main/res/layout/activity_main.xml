@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context="ru.kszorin.seaworldkotlin.ui.MainActivity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ru.kszorin.seaworldkotlin.ui.PlayingWorldView
+            android:id="@+id/playing_world_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="90"/>
+
+        <Button
+            android:id="@+id/reset_game_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/reset_game"
+            />
+
+    </LinearLayout>
+</layout>
