@@ -14,4 +14,12 @@ class MainPresenter : MvpPresenter<IMainView>() {
 
     private var seaWorldInteractor : ISeaWorldInteractor = SeaWorldInteractor(SeaWorldRepository())
 
+    override fun attachView(view: IMainView?) {
+        super.attachView(view)
+        val initData = seaWorldInteractor.fieldInitialization()
+        val currentPosition = seaWorldInteractor.getCurrentPosition()
+        viewState.initField(initData.sizeX, initData.sizeY)
+        viewState.drawWorld(currentPosition.creaturesList)
+
+    }
 }

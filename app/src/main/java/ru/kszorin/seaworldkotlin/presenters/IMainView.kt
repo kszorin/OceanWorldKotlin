@@ -1,6 +1,7 @@
 package ru.kszorin.seaworldkotlin.presenters
 
 import com.arellomobile.mvp.MvpView
+import ru.kszorin.seaworldkotlin.use_cases.dto.CreatureStepData
 
 
 /**
@@ -8,4 +9,8 @@ import com.arellomobile.mvp.MvpView
  */
 
 interface IMainView: MvpView {
+
+    fun initField(fieldSizeX: Int, fieldSizeY: Int)
+
+    fun drawWorld(creaturesList: List<CreatureStepData>)
 }

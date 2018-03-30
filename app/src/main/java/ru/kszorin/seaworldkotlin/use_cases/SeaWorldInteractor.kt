@@ -1,7 +1,7 @@
 package ru.kszorin.seaworldkotlin.use_cases
 
-import ru.kszorin.seaworldkotlin.use_cases.dto.CurrentPositionDto
-import ru.kszorin.seaworldkotlin.use_cases.dto.FieldDataDto
+import ru.kszorin.seaworldkotlin.use_cases.dto.CurrentStateDto
+import ru.kszorin.seaworldkotlin.use_cases.dto.InitDataDto
 
 /**
  * Created on 28.03.2018.
@@ -9,12 +9,20 @@ import ru.kszorin.seaworldkotlin.use_cases.dto.FieldDataDto
 class SeaWorldInteractor(val seaWorldRepository: ISeaWorldRepository): ISeaWorldInteractor {
 
 
-    override fun fieldInitialization(): FieldDataDto {
+    override fun fieldInitialization(): InitDataDto {
+        resetGame()
         return seaWorldRepository.getFieldData()
     }
 
-    override fun doNextStep(): CurrentPositionDto {
+    override fun doNextStep() {
         seaWorldRepository.nextStep()
-        return seaWorldRepository.getCurrentPosition()
+    }
+
+    override fun getCurrentPosition(): CurrentStateDto {
+        return seaWorldRepository.getCurrentState()
+    }
+
+    override fun resetGame() {
+        seaWorldRepository.resetGame()
     }
 }
