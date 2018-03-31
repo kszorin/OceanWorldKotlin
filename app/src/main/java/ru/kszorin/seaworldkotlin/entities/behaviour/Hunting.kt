@@ -29,7 +29,7 @@ class Hunting: IEatingBehaviour {
             animal.waterSpace[selectedFreePos.second][selectedFreePos.first] = animal.waterSpace[pos.second][pos.first]
             animal.waterSpace[pos.second][pos.first] = World.FREE_WATER_CODE
             animal.creaturesMap[animal.id]?.pos = selectedFreePos
-
+            //TODO: decrease penguins numbers
             return true
         }
         return false

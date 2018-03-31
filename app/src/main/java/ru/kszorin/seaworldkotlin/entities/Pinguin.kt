@@ -20,10 +20,6 @@ class Pinguin(id : Int, pos : Pair<Int, Int>) : Animal(id, pos) {
         reproductionPeriod = REPRODUCTION_PERIOD
     }
 
-    override fun lifeStep() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
     override fun createBaby(id: Int, pos: Pair<Int, Int>): Animal {
         return Pinguin(id, pos)
     }

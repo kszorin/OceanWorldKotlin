@@ -1,5 +1,6 @@
 package ru.kszorin.seaworldkotlin.entities
 
+import android.util.Log
 import ru.kszorin.seaworldkotlin.entities.behaviour.EnvironsMoving
 import ru.kszorin.seaworldkotlin.entities.behaviour.Hunting
 import ru.kszorin.seaworldkotlin.entities.behaviour.PeriodicReproduction
@@ -7,7 +8,7 @@ import ru.kszorin.seaworldkotlin.entities.behaviour.PeriodicReproduction
 /**
  * Created on 23.02.2018.
  */
-class Orca(id : Int, pos : Pair<Int, Int>) : Animal(id, pos) {
+class Orca(id: Int, pos: Pair<Int, Int>) : Animal(id, pos) {
 
     override val species = Species.ORCA
     override val environs: Byte = ENVIRONS
@@ -21,16 +22,45 @@ class Orca(id : Int, pos : Pair<Int, Int>) : Animal(id, pos) {
     }
 
     override fun lifeStep() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        //try hunting, if unsuccessful - try move
+        if (eatingBehaviour.eat(this, findVictims())) {
+            timeFromEating = 0
+            Log.d(TAG, "id = $id, success hunting")
+        } else {
+            //TODO: think about dublicate code removing
+            Log.d(TAG, "id = $id, success hunting")
+            val isMove = movingBehaviour.move(this, findFreePlaces())
+            if (isMove) {
+                Log.d(TAG, "id = $id, success moving")
+            }
+            timeFromEating++
+        }
+
+        //check on starving death
+        if (timeFromEating >= STARVING_DEATH_PERIOD) {
+            waterSpace[pos.second][pos.first] = World.FREE_WATER_CODE
+            creaturesMap.remove(this.id)
+            //TODO: decrease orcas numbers
+            Log.d(TAG, "${creaturesMap[id]?.species?.name} (${id}):" +
+                    " [${pos.first}, ${pos.second}]: died if hungry!")
+        } else {
+            //TODO: think about dublicate code removing
+            //reproduction
+            age++;
+            if (age != 0 && 0 == age % reproductionPeriod) {
+                reproductionBehaviour.reproduce(this, findFreePlaces())
+            }
+        }
     }
 
-    override fun createBaby(id: Int, pos: Pair<Int, Int>): Animal  {
+    override fun createBaby(id: Int, pos: Pair<Int, Int>): Animal {
         return Orca(id, pos)
     }
 
     companion object {
+        val TAG = "Orca"
         val REPRODUCTION_PERIOD: Byte = 8
         private val ENVIRONS: Byte = 1
-        val HUNGER_DEATH_PERIOD: Byte = 3
+        val STARVING_DEATH_PERIOD: Byte = 3
     }
 }

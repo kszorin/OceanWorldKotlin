@@ -41,7 +41,7 @@ class SeaWorldRepository : ISeaWorldRepository {
             if (creature.species.equals(Orca)) {
                 creature as Orca
 
-                isStarvingDeathSoon = creature.timeFromEating >= Orca.HUNGER_DEATH_PERIOD - 1
+                isStarvingDeathSoon = creature.timeFromEating >= Orca.STARVING_DEATH_PERIOD - 1
             }
 
             creaturesList.add(CreatureStepData(

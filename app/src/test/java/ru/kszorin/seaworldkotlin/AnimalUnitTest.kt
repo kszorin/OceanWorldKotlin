@@ -5,7 +5,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
-import ru.kszorin.seaworldkotlin.di.components.DaggerTestModelsComponent
 import ru.kszorin.seaworldkotlin.di.models.TestWorldModule
 import ru.kszorin.seaworldkotlin.entities.Orca
 
@@ -29,7 +28,7 @@ class AnimalUnitTest(val x: Int, val y: Int) {
 
     @Test
     fun testFindPlacesforMoving() {
-        val size = orca.findPlacesForMoving().size
+        val size = orca.findFreePlaces().size
         assertTrue(size > 0)
         println("x = $x, y = $y, founded positions = $size")
     }
@@ -44,7 +43,7 @@ class AnimalUnitTest(val x: Int, val y: Int) {
 
     @Test
     fun testEnvironsMoving() {
-        val result = orca.movingBehaviour.move(orca, orca.findPlacesForMoving())
+        val result = orca.movingBehaviour.move(orca, orca.findFreePlaces())
         assertTrue(result)
     }
 
@@ -56,7 +55,7 @@ class AnimalUnitTest(val x: Int, val y: Int) {
 
     @Test
     fun testPeriodicReproduction() {
-        val result = orca.reproductionBehaviour.reproduce(orca, orca.findPlacesForMoving())
+        val result = orca.reproductionBehaviour.reproduce(orca, orca.findFreePlaces())
         assertTrue(result)
     }
 

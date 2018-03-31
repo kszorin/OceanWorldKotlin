@@ -43,7 +43,7 @@ abstract class Animal(id: Int, pos: Pair<Int, Int>) : Creature(id, pos) {
     /**
      * @return list of suitable places for moving
      */
-    fun findPlacesForMoving(): List<Pair<Int, Int>> {
+    fun findFreePlaces(): List<Pair<Int, Int>> {
         // condition: position is not occupied by anyone
         return findInEnvirons(Function { potentialPositionValue -> World.FREE_WATER_CODE == potentialPositionValue })
     }
@@ -100,4 +100,11 @@ abstract class Animal(id: Int, pos: Pair<Int, Int>) : Creature(id, pos) {
         return foundPositions
     }
 
+    override fun lifeStep() {
+        movingBehaviour.move(this, findFreePlaces())
+        age++
+        if (age != 0 && 0 == age % reproductionPeriod) {
+            reproductionBehaviour.reproduce(this, findFreePlaces())
+        }
+    }
 }
