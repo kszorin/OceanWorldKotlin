@@ -3,6 +3,8 @@ package ru.kszorin.seaworldkotlin.ui
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
+import android.view.View
 import com.arellomobile.mvp.MvpActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import ru.kszorin.seaworldkotlin.R
@@ -27,6 +29,15 @@ class MainActivity : MvpActivity(), IMainView {
         setContentView(binding.getRoot())
 
         playingWorldView = binding.playingWorldView
+        binding.resetGameButton.setOnClickListener(View.OnClickListener { presenter.onReset() })
+
+        playingWorldView.setOnTouchListener(View.OnTouchListener({view, motionEvent ->
+            val action = motionEvent.getAction()
+            if (action == MotionEvent.ACTION_DOWN) {
+                presenter.onTouch()
+            }
+            true
+        }))
     }
 
     override fun onPause() {
