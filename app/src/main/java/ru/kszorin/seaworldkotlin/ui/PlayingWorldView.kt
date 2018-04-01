@@ -85,7 +85,6 @@ class PlayingWorldView(context: Context, attrs: AttributeSet)
                     synchronized(holder) {
                         drawLines(canvas!!)
                         drawCreatures(canvas!!)
-                        Log.d(TAG, "run on threads ${Thread.currentThread()}")
                     }
                 } finally {
                     if (canvas != null) {
@@ -146,8 +145,6 @@ class PlayingWorldView(context: Context, attrs: AttributeSet)
         }
 
         //draw creature
-        val orcaBmp = BitmapFactory.decodeResource(getResources(), Creature.Companion.Species.ORCA.bmpId)
-        val penguinBmp = BitmapFactory.decodeResource(getResources(), Creature.Companion.Species.PENGUIN.bmpId)
         val bmp = when (creatureStepData.species) {
             Creature.Companion.Species.ORCA -> orcaBmp
             Creature.Companion.Species.PENGUIN -> penguinBmp
