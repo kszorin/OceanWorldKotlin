@@ -19,8 +19,8 @@ class SeaWorldRepository : ISeaWorldRepository {
         return InitDataDto(World.FIELD_SIZE_X, World.FIELD_SIZE_Y)
     }
 
-    override fun nextStep() {
-        world.nextStep()
+    override fun nextStep(delay: Long) {
+        world.nextStep(delay)
     }
 
     override fun getCurrentState(): CurrentStateDto {

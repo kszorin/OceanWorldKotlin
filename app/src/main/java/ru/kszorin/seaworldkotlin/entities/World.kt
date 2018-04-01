@@ -1,5 +1,6 @@
 package ru.kszorin.seaworldkotlin.entities
 
+import android.util.Log
 import ru.kszorin.seaworldkotlin.SeaWorldApp
 import java.util.*
 import javax.inject.Inject
@@ -45,8 +46,12 @@ class World {
         }
     }
 
-    fun nextStep() {
+    fun nextStep(delay: Long) {
         for (creature in creaturesMap.values.sortedWith(kotlin.Comparator({ t1, t2 -> t1.compareTo(t2) }))) {
+            if (delay > 0) {
+                Thread.sleep(delay)
+            }
+            Log.d(TAG, "step was completed on thread ${Thread.currentThread()}")
             creature.lifeStep()
         }
     }

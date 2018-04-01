@@ -12,7 +12,7 @@ interface ISeaWorldInteractor {
 
     fun getCurrentPosition(): CurrentStateDto
 
-    fun doNextStep()
+    fun doNextStep(delay: Long)
 
     fun resetGame()
 }

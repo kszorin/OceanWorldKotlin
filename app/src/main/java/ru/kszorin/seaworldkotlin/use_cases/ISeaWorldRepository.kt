@@ -10,7 +10,7 @@ interface ISeaWorldRepository {
 
     fun getFieldData(): InitDataDto
 
-    fun nextStep()
+    fun nextStep(delay: Long)
 
     fun getCurrentState(): CurrentStateDto
 

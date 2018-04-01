@@ -14,8 +14,8 @@ class SeaWorldInteractor(val seaWorldRepository: ISeaWorldRepository): ISeaWorld
         return seaWorldRepository.getFieldData()
     }
 
-    override fun doNextStep() {
-        seaWorldRepository.nextStep()
+    override fun doNextStep(delay: Long) {
+        seaWorldRepository.nextStep(delay)
     }
 
     override fun getCurrentPosition(): CurrentStateDto {
