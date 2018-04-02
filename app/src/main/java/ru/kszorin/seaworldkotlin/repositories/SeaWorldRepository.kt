@@ -1,5 +1,6 @@
 package ru.kszorin.seaworldkotlin.repositories
 
+import android.util.Log
 import ru.kszorin.seaworldkotlin.entities.Animal
 import ru.kszorin.seaworldkotlin.entities.Creature
 import ru.kszorin.seaworldkotlin.entities.Orca
@@ -8,6 +9,7 @@ import ru.kszorin.seaworldkotlin.use_cases.ISeaWorldRepository
 import ru.kszorin.seaworldkotlin.use_cases.dto.CreatureStepData
 import ru.kszorin.seaworldkotlin.use_cases.dto.CurrentStateDto
 import ru.kszorin.seaworldkotlin.use_cases.dto.InitDataDto
+import rx.Observable
 
 /**
  * Created on 28.03.2018.
@@ -19,9 +21,9 @@ class SeaWorldRepository : ISeaWorldRepository {
         return InitDataDto(World.FIELD_SIZE_X, World.FIELD_SIZE_Y)
     }
 
-    override fun nextStep(delay: Long) {
+    /*override fun nextStep(delay: Long) {
         world.nextStep(delay)
-    }
+    }*/
 
     override fun getCurrentState(): CurrentStateDto {
         val creaturesList = mutableListOf<CreatureStepData>()
@@ -55,7 +57,25 @@ class SeaWorldRepository : ISeaWorldRepository {
         return CurrentStateDto(creaturesList)
     }
 
+    override fun getNextStepObservable(delay: Long): Observable<CurrentStateDto> {
+        return Observable.create(Observable.OnSubscribe<CurrentStateDto> { subscriber ->
+            for (creature in world.creaturesMap.values.sortedWith(kotlin.Comparator({ t1, t2 -> t1.compareTo(t2) }))) {
+                if (delay > 0) {
+                    Thread.sleep(delay)
+                }
+                creature.lifeStep()
+                Log.d(TAG, "step was completed on thread ${Thread.currentThread()}")
+                subscriber.onNext(getCurrentState())
+            }
+            subscriber.onCompleted()
+        })
+    }
+
     override fun resetGame() {
         world.reset()
+    }
+
+    companion object {
+        val TAG = "SeaWorldRepository"
     }
 }

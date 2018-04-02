@@ -9,8 +9,6 @@ import ru.kszorin.seaworldkotlin.use_cases.SeaWorldInteractor
 import ru.kszorin.seaworldkotlin.use_cases.dto.CurrentStateDto
 import rx.Observable
 import rx.Subscription
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 
 /**
@@ -30,13 +28,15 @@ class MainPresenter : MvpPresenter<IMainView>() {
         viewState.initField(initData.sizeX, initData.sizeY)
         viewState.drawWorld(currentPosition.creaturesList)
 
-        obs = Observable.create(Observable.OnSubscribe<CurrentStateDto> { subscriber ->
+        /*obs = Observable.create(Observable.OnSubscribe<CurrentStateDto> { subscriber ->
             seaWorldInteractor.doNextStep(UPDATE_POSITIONS_DELAY)
             subscriber.onNext(seaWorldInteractor.getCurrentPosition())
             subscriber.onCompleted()
         })
                 .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())*/
+
+        obs = seaWorldInteractor.getNextDataObservable(UPDATE_POSITIONS_DELAY)
     }
 
     fun onTouch() {
@@ -71,6 +71,6 @@ class MainPresenter : MvpPresenter<IMainView>() {
 
     companion object {
         val TAG = "MainPresenter"
-        val UPDATE_POSITIONS_DELAY = 300L
+        val UPDATE_POSITIONS_DELAY = 500L
     }
 }
