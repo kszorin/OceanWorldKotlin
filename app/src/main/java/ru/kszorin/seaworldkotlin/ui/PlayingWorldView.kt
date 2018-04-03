@@ -43,7 +43,7 @@ class PlayingWorldView(context: Context, attrs: AttributeSet)
 
     lateinit var creaturesList: List<CreatureStepData>
 
-    private var drawWorldFlag = false
+    var drawWorldFlag = false
 
     private var drawWorldSubscription: Subscription? = null
 
@@ -70,7 +70,6 @@ class PlayingWorldView(context: Context, attrs: AttributeSet)
 
     override fun surfaceCreated(p0: SurfaceHolder?) {
         Log.d(TAG, "surfaceCreated")
-        drawWorldFlag = true
         drawWorld(p0!!, creaturesList)
     }
 
@@ -78,6 +77,7 @@ class PlayingWorldView(context: Context, attrs: AttributeSet)
         var canvas: Canvas? = null
 
         drawWorldSubscription = Completable.fromAction(Action0 {
+            drawWorldFlag = true
             while (drawWorldFlag) {
                 try {
                     canvas = holder.lockCanvas(null)
@@ -167,7 +167,7 @@ class PlayingWorldView(context: Context, attrs: AttributeSet)
 
     override fun surfaceDestroyed(p0: SurfaceHolder?) {
         Log.d(TAG, "surfaceDestroyed")
-        drawWorldFlag = false
+        stopGame()
     }
 
     fun stopGame() {

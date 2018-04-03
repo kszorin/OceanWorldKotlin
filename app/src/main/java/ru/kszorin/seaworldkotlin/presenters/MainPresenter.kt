@@ -9,6 +9,7 @@ import ru.kszorin.seaworldkotlin.use_cases.SeaWorldInteractor
 import ru.kszorin.seaworldkotlin.use_cases.dto.CurrentStateDto
 import rx.Observable
 import rx.Subscription
+import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 
 /**
@@ -21,8 +22,8 @@ class MainPresenter : MvpPresenter<IMainView>() {
 
     private var seaWorldInteractor: ISeaWorldInteractor = SeaWorldInteractor(SeaWorldRepository())
 
-    override fun attachView(view: IMainView?) {
-        super.attachView(view)
+    override fun onFirstViewAttach() {
+        super.onFirstViewAttach()
         val initData = seaWorldInteractor.fieldInitialization()
         val currentPosition = seaWorldInteractor.getCurrentPosition()
         viewState.initField(initData.sizeX, initData.sizeY)
@@ -41,7 +42,9 @@ class MainPresenter : MvpPresenter<IMainView>() {
 
     fun onTouch() {
         Log.d(TAG, "onTouch")
-        registerSubscription( obs!!.subscribe({ currentPosition -> viewState.drawWorld(currentPosition.creaturesList) }))
+        registerSubscription( obs!!
+                .subscribeOn(Schedulers.computation())
+                .subscribe({ currentPosition -> viewState.drawWorld(currentPosition.creaturesList) }))
     }
 
     fun onReset() {

@@ -17,7 +17,7 @@ class MainActivity : MvpActivity(), IMainView {
 
     lateinit private var binding: ActivityMainBinding
 
-    lateinit private var playingWorldView : PlayingWorldView
+    lateinit private var playingWorldView: PlayingWorldView
 
     @InjectPresenter
     lateinit var presenter: MainPresenter
@@ -29,9 +29,11 @@ class MainActivity : MvpActivity(), IMainView {
         setContentView(binding.getRoot())
 
         playingWorldView = binding.playingWorldView
-        binding.resetGameButton.setOnClickListener(View.OnClickListener { presenter.onReset() })
+        binding.resetGameButton.setOnClickListener(View.OnClickListener {
+            presenter.onReset()
+        })
 
-        playingWorldView.setOnTouchListener(View.OnTouchListener({view, motionEvent ->
+        playingWorldView.setOnTouchListener(View.OnTouchListener({ view, motionEvent ->
             val action = motionEvent.getAction()
             if (action == MotionEvent.ACTION_DOWN) {
                 presenter.onTouch()
@@ -42,7 +44,7 @@ class MainActivity : MvpActivity(), IMainView {
 
     override fun onPause() {
         super.onPause()
-        playingWorldView.stopGame()
+        presenter.onReset()
     }
 
     override fun initField(fieldSizeX: Int, fieldSizeY: Int) {

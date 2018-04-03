@@ -17,6 +17,8 @@ import rx.Observable
 class SeaWorldRepository : ISeaWorldRepository {
     val world = World()
 
+    var nextStepFlag = false
+
     override fun getFieldData(): InitDataDto {
         return InitDataDto(World.FIELD_SIZE_X, World.FIELD_SIZE_Y)
     }
@@ -59,21 +61,31 @@ class SeaWorldRepository : ISeaWorldRepository {
 
     override fun getNextStepObservable(delay: Long): Observable<CurrentStateDto> {
         return Observable.create(Observable.OnSubscribe<CurrentStateDto> { subscriber ->
-            for (creature in world.creaturesMap.values.sortedWith(kotlin.Comparator({ t1, t2 -> t1.compareTo(t2) }))) {
-                if (delay > 0) {
-                    Thread.sleep(delay)
+            nextStepFlag = true
+            try {
+
+                for (creature in world.creaturesMap.values.sortedWith(kotlin.Comparator({ t1, t2 -> t1.compareTo(t2) }))) {
+                    if (!nextStepFlag) {
+                        break
+                    }
+                    if (delay > 0) {
+                        Thread.sleep(delay)
+                    }
+                    if (world.creaturesMap.containsKey(creature.id)) {
+                        creature.lifeStep()
+                    }
+                    Log.d(TAG, "step was completed on thread ${Thread.currentThread()}")
+                    subscriber.onNext(getCurrentState())
                 }
-                if (world.creaturesMap.containsKey(creature.id)) {
-                    creature.lifeStep()
-                }
-                Log.d(TAG, "step was completed on thread ${Thread.currentThread()}")
-                subscriber.onNext(getCurrentState())
+            } catch (ex: InterruptedException) {
+                ex.printStackTrace()
             }
             subscriber.onCompleted()
         })
     }
 
     override fun resetGame() {
+        nextStepFlag = false
         world.reset()
     }
 
