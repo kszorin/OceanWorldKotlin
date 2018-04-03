@@ -24,6 +24,16 @@ class EnvironsMoving: IMovingBehaviour {
             animal.creaturesMap[animal.id]?.pos = selectedFreePos
             Log.d(TAG, "${animal.creaturesMap[animal.id]?.species?.name} (${animal.id}):" +
                     " [${pos.first}, ${pos.second}] -> [${selectedFreePos.first}, ${selectedFreePos.second}]")
+            for (cr in animal.creaturesMap) {
+                Log.d(TAG, "${cr.key} - ${cr.value.species.name} [${cr.value.pos.first}, ${cr.value.pos.second}]")
+            }
+            for (i in animal.waterSpace.indices) {
+                for (j in animal.waterSpace[i].indices) {
+                    System.out.printf("%02d ", animal.waterSpace[i][j])
+                }
+                println()
+            }
+
             return true
         }
         return false

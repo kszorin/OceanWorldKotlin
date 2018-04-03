@@ -29,6 +29,16 @@ class Hunting: IEatingBehaviour {
             animal.waterSpace[selectedFreePos.second][selectedFreePos.first] = animal.waterSpace[pos.second][pos.first]
             animal.waterSpace[pos.second][pos.first] = World.FREE_WATER_CODE
             animal.creaturesMap[animal.id]?.pos = selectedFreePos
+
+            for (cr in animal.creaturesMap) {
+                Log.d("Hunting", "${cr.key} - ${cr.value.species.name} [${cr.value.pos.first}, ${cr.value.pos.second}]")
+            }
+            for (i in animal.waterSpace.indices) {
+                for (j in animal.waterSpace[i].indices) {
+                    System.out.printf("%02d ", animal.waterSpace[i][j])
+                }
+                println()
+            }
             //TODO: decrease penguins numbers
             return true
         }
