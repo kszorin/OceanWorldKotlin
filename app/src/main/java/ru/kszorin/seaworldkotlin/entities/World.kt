@@ -1,10 +1,8 @@
 package ru.kszorin.seaworldkotlin.entities
 
-import android.util.Log
 import ru.kszorin.seaworldkotlin.SeaWorldApp
 import java.util.*
 import javax.inject.Inject
-import javax.inject.Named
 
 /**
  * Created on 24.02.2018.
@@ -19,8 +17,8 @@ class World {
     @Inject
     lateinit var creaturesMap: MutableMap<Int, Creature>
 
-    @set:[Inject Named("creaturesIdCounter")]
-    var creaturesIdCounter: Int = 0
+    @Inject
+    lateinit var creaturesIdCounter: CreaturesIdCounter
 
     init {
         SeaWorldApp.modelsComponent?.inject(this)
@@ -34,27 +32,30 @@ class World {
                 waterSpace[i][j] = FREE_WATER_CODE
             }
         }
-        creaturesIdCounter = 0
+        creaturesIdCounter.counter = 0
         creaturesMap.clear()
 
         // create creatures and put them on the field
         for (species in creaturesNumber.keys) {
             for (i in 0 until creaturesNumber[species]!!) {
-                creaturesMap.put(creaturesIdCounter, createCreatures(species, creaturesIdCounter, occupyFreePosition(creaturesIdCounter)))
-                creaturesIdCounter++;
+                creaturesMap.put(
+                        creaturesIdCounter.counter,
+                        createCreatures(species, creaturesIdCounter.counter, occupyFreePosition(creaturesIdCounter.counter))
+                )
+                creaturesIdCounter.counter++
             }
         }
     }
 
-    fun nextStep(delay: Long) {
+/*    fun nextStep(delay: Long) {
         for (creature in creaturesMap.values.sortedWith(kotlin.Comparator({ t1, t2 -> t1.compareTo(t2) }))) {
             if (delay > 0) {
                 Thread.sleep(delay)
             }
             Log.d(TAG, "step was completed on thread ${Thread.currentThread()}")
-            creature.lifeStep()
+            creature?.lifeStep()
         }
-    }
+    }*/
 
     private fun occupyFreePosition(id: Int): Pair<Int, Int> {
         var randomPos: Int

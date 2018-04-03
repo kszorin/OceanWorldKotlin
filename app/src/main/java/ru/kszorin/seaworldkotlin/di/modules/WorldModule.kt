@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import ru.kszorin.seaworldkotlin.array2dOfInt
 import ru.kszorin.seaworldkotlin.entities.Creature
+import ru.kszorin.seaworldkotlin.entities.CreaturesIdCounter
 import java.util.*
 import javax.inject.Singleton
 
@@ -15,7 +16,7 @@ class WorldModule(fieldSizeX: Int, fieldSizeY: Int) {
 
     private val waterSpace = array2dOfInt(fieldSizeY, fieldSizeX)
     private val creaturesMap: MutableMap<Int, Creature> = TreeMap()
-    private var creaturesIdCounter: Int = 0
+    private var creaturesIdCounter: CreaturesIdCounter = CreaturesIdCounter()
 
     @Provides
     @Singleton
@@ -31,7 +32,7 @@ class WorldModule(fieldSizeX: Int, fieldSizeY: Int) {
 
     @Provides
     @Singleton
-    fun provideCreaturesIdCounter(): Int {
+    fun provideCreaturesIdCounter(): CreaturesIdCounter {
         return creaturesIdCounter
     }
 }
