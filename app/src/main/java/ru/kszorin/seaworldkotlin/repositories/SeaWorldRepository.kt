@@ -35,25 +35,25 @@ class SeaWorldRepository : ISeaWorldRepository {
                 age = creature.age
             }
 
-            var isStarvingDeathSoon = false
-            creature as Animal
-            val isChildbirthSoon = creature.age % creature.reproductionPeriod >= creature.reproductionPeriod - 1
+                var isStarvingDeathSoon = false
+                creature as Animal
+                val isChildbirthSoon = creature.age % creature.reproductionPeriod >= creature.reproductionPeriod - 1
 
-            //orca has additional parameters for displaying
-            if (creature.species.equals(Orca)) {
-                creature as Orca
+                //orca has additional parameters for displaying
+                if (creature.species.equals(Orca)) {
+                    creature as Orca
 
-                isStarvingDeathSoon = creature.timeFromEating >= Orca.STARVING_DEATH_PERIOD - 1
+                    isStarvingDeathSoon = creature.timeFromEating >= Orca.STARVING_DEATH_PERIOD - 1
+                }
+
+                creaturesList.add(CreatureStepData(
+                        creature.species,
+                        creature.pos,
+                        age,
+                        isStarvingDeathSoon,
+                        isChildbirthSoon
+                ))
             }
-
-            creaturesList.add(CreatureStepData(
-                    creature.species,
-                    creature.pos,
-                    age,
-                    isStarvingDeathSoon,
-                    isChildbirthSoon
-            ))
-        }
         return CurrentStateDto(creaturesList)
     }
 
@@ -63,7 +63,9 @@ class SeaWorldRepository : ISeaWorldRepository {
                 if (delay > 0) {
                     Thread.sleep(delay)
                 }
-                creature.lifeStep()
+                if (world.creaturesMap.containsKey(creature.id)) {
+                    creature.lifeStep()
+                }
                 Log.d(TAG, "step was completed on thread ${Thread.currentThread()}")
                 subscriber.onNext(getCurrentState())
             }
