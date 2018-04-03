@@ -6,6 +6,7 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 26
+    def debugLog = false
     defaultConfig {
         applicationId "ru.kszorin.seaworldkotlin"
         minSdkVersion 24
@@ -19,6 +20,14 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    applicationVariants.all { variant ->
+        buildConfigField "boolean", "DEBUG_LOG", "" + debugLog + ""
     }
 }
 
@@ -35,6 +44,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
+    kapt 'com.android.databinding:compiler:3.0.0'
+
     // Moxy
     compile 'com.arello-mobile:moxy:1.5.3'
     compile 'com.arello-mobile:moxy-android:1.5.3'
@@ -43,6 +54,11 @@ dependencies {
     // Dagger2
     compile 'com.google.dagger:dagger-android:2.11'
     kapt 'com.google.dagger:dagger-compiler:2.11'
+
+    //rx
+    compile 'io.reactivex:rxjava:1.1.6'
+    compile 'io.reactivex:rxjava-joins:0.22.0'
+    compile 'io.reactivex:rxandroid:1.2.1'
 
     // Stetho (DB diagnostic)
     compile 'com.facebook.stetho:stetho:1.5.0'
