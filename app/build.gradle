@@ -60,6 +60,10 @@ dependencies {
     compile 'io.reactivex:rxjava-joins:0.22.0'
     compile 'io.reactivex:rxandroid:1.2.1'
 
+    //room
+    compile "android.arch.persistence.room:runtime:1.0.0"
+    kapt "android.arch.persistence.room:compiler:1.0.0"
+
     // Stetho (DB diagnostic)
     compile 'com.facebook.stetho:stetho:1.5.0'
     compile 'com.facebook.stetho:stetho-okhttp3:1.5.0'
