@@ -13,8 +13,6 @@ interface ISeaWorldRepository {
 
     fun getNextStepObservable(delay: Long): Observable<CurrentStateDto>
 
-    //fun nextStep(delay: Long)
-
     fun getCurrentState(): CurrentStateDto
 
     fun resetGame()

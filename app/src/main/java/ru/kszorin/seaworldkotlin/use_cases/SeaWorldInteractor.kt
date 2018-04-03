@@ -9,7 +9,6 @@ import rx.Observable
  */
 class SeaWorldInteractor(val seaWorldRepository: ISeaWorldRepository): ISeaWorldInteractor {
 
-
     override fun fieldInitialization(): InitDataDto {
         resetGame()
         return seaWorldRepository.getFieldData()
@@ -18,10 +17,6 @@ class SeaWorldInteractor(val seaWorldRepository: ISeaWorldRepository): ISeaWorld
     override fun getNextDataObservable(delay: Long): Observable<CurrentStateDto> {
         return seaWorldRepository.getNextStepObservable(delay)
     }
-
-    /*    override fun doNextStep(delay: Long) {
-        seaWorldRepository.nextStep(delay)
-    }*/
 
     override fun getCurrentPosition(): CurrentStateDto {
         return seaWorldRepository.getCurrentState()

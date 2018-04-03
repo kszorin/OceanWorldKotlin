@@ -12,7 +12,6 @@ import javax.inject.Inject
  * Created on 23.02.2018.
  */
 abstract class Animal(id: Int, pos: Pair<Int, Int>) : Creature(id, pos) {
-    val TAG = "Animal"
 
     init {
         SeaWorldApp.modelsComponent?.inject(this)
@@ -106,5 +105,9 @@ abstract class Animal(id: Int, pos: Pair<Int, Int>) : Creature(id, pos) {
         if (age != 0 && 0 == age % reproductionPeriod) {
             reproductionBehaviour.reproduce(this, findFreePlaces())
         }
+    }
+
+    companion object {
+        private val TAG = "Animal"
     }
 }

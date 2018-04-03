@@ -12,6 +12,8 @@ fun createCreatures(species: Creature.Companion.Species, id: Int, pos: Pair<Int,
         Creature.Companion.Species.ORCA -> Orca(id, pos)
         Creature.Companion.Species.PENGUIN -> Pinguin(id, pos)
     }
+
     Log.d(TAG, "${species.name} (id = $id) was created and put in [${pos.first}, ${pos.second}]")
+
     return creature
 }

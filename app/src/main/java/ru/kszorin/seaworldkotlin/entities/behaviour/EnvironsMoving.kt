@@ -35,6 +35,6 @@ class EnvironsMoving: IMovingBehaviour {
     }
 
     companion object {
-        val TAG = "EnvironsMoving"
+        private val TAG = "EnvironsMoving"
     }
 }

@@ -23,15 +23,10 @@ class SeaWorldRepository : ISeaWorldRepository {
         return InitDataDto(World.FIELD_SIZE_X, World.FIELD_SIZE_Y)
     }
 
-    /*override fun nextStep(delay: Long) {
-        world.nextStep(delay)
-    }*/
-
     override fun getCurrentState(): CurrentStateDto {
         val creaturesList = mutableListOf<CreatureStepData>()
         for (creature in world.creaturesMap.values) {
-            // TODO: add constant
-            var age = -1
+            var age = DEFAULT_AGE
             if (creature.species.equals(Creature.Companion.Species.PENGUIN) || creature.species.equals(Creature.Companion.Species.ORCA)) {
                 creature as Animal
                 age = creature.age
@@ -90,6 +85,7 @@ class SeaWorldRepository : ISeaWorldRepository {
     }
 
     companion object {
-        val TAG = "SeaWorldRepository"
+        private val TAG = "SeaWorldRepository"
+        private val DEFAULT_AGE = -1
     }
 }

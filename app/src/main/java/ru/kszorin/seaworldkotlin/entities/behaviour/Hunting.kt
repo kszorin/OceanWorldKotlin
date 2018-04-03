@@ -41,6 +41,6 @@ class Hunting: IEatingBehaviour {
     }
 
     companion object {
-        val TAG = "Hunting"
+        private val TAG = "Hunting"
     }
 }

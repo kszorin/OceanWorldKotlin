@@ -29,14 +29,6 @@ class MainPresenter : MvpPresenter<IMainView>() {
         viewState.initField(initData.sizeX, initData.sizeY)
         viewState.drawWorld(currentPosition.creaturesList)
 
-        /*obs = Observable.create(Observable.OnSubscribe<CurrentStateDto> { subscriber ->
-            seaWorldInteractor.doNextStep(UPDATE_POSITIONS_DELAY)
-            subscriber.onNext(seaWorldInteractor.getCurrentPosition())
-            subscriber.onCompleted()
-        })
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())*/
-
         obs = seaWorldInteractor.getNextDataObservable(UPDATE_POSITIONS_DELAY)
     }
 
@@ -73,7 +65,7 @@ class MainPresenter : MvpPresenter<IMainView>() {
     }
 
     companion object {
-        val TAG = "MainPresenter"
-        val UPDATE_POSITIONS_DELAY = 500L
+        private val TAG = "MainPresenter"
+        private val UPDATE_POSITIONS_DELAY = 500L
     }
 }

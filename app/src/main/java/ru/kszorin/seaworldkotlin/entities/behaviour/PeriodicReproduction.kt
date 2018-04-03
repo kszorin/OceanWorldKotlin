@@ -48,6 +48,6 @@ class PeriodicReproduction: IReproductionBehaviour {
     }
 
     companion object {
-        val TAG = "PeriodicReproduction"
+        private val TAG = "PeriodicReproduction"
     }
 }

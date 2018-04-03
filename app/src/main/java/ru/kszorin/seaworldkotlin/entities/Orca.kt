@@ -58,7 +58,7 @@ class Orca(id: Int, pos: Pair<Int, Int>) : Animal(id, pos) {
     }
 
     companion object {
-        val TAG = "Orca"
+        private val TAG = "Orca"
         val REPRODUCTION_PERIOD: Byte = 8
         private val ENVIRONS: Byte = 1
         val STARVING_DEATH_PERIOD: Byte = 3
