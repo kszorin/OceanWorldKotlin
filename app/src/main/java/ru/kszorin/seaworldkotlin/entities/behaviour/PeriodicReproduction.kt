@@ -1,16 +1,17 @@
 package ru.kszorin.seaworldkotlin.entities.behaviour
 
 import android.util.Log
+import ru.kszorin.seaworldkotlin.BuildConfig
 import ru.kszorin.seaworldkotlin.SeaWorldApp
 import ru.kszorin.seaworldkotlin.entities.Animal
 import ru.kszorin.seaworldkotlin.entities.CreaturesIdCounter
+import ru.kszorin.seaworldkotlin.entities.World
 import javax.inject.Inject
 
 /**
  * Created on 23.02.2018.
  */
 class PeriodicReproduction: IReproductionBehaviour {
-    val TAG = "PeriodicReproduction"
 
     @Inject
     lateinit var creaturesIdCounter: CreaturesIdCounter
@@ -36,19 +37,17 @@ class PeriodicReproduction: IReproductionBehaviour {
                     " [${pos.first}, ${pos.second}]: produced ${animal.creaturesMap[creaturesIdCounter.counter]?.species?.name}" +
                     "(${baby.id}) [${baby.pos.first}, ${baby.pos.second}]")
 
-            for (cr in animal.creaturesMap) {
-                Log.d(TAG, "${cr.key} - ${cr.value.species.name} [${cr.value.pos.first}, ${cr.value.pos.second}]")
-            }
-            for (i in animal.waterSpace.indices) {
-                for (j in animal.waterSpace[i].indices) {
-                    System.out.printf("%02d ", animal.waterSpace[i][j])
-                }
-                println()
+            if (BuildConfig.DEBUG_LOG) {
+                World.logging(TAG, animal.creaturesMap, animal.waterSpace)
             }
 
             creaturesIdCounter.counter++
             return true
         }
         return false
+    }
+
+    companion object {
+        val TAG = "PeriodicReproduction"
     }
 }

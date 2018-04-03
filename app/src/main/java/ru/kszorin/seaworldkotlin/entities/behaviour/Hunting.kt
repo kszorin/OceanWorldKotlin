@@ -1,6 +1,7 @@
 package ru.kszorin.seaworldkotlin.entities.behaviour
 
 import android.util.Log
+import ru.kszorin.seaworldkotlin.BuildConfig
 import ru.kszorin.seaworldkotlin.entities.Animal
 import ru.kszorin.seaworldkotlin.entities.World
 
@@ -8,7 +9,6 @@ import ru.kszorin.seaworldkotlin.entities.World
  * Created on 23.02.2018.
  */
 class Hunting: IEatingBehaviour {
-    val TAG = "Hunting"
 
     override fun eat(animal: Animal, foundPositionsInEnvirons: List<Pair<Int, Int>>): Boolean {
         val pos = animal.pos
@@ -30,18 +30,17 @@ class Hunting: IEatingBehaviour {
             animal.waterSpace[pos.second][pos.first] = World.FREE_WATER_CODE
             animal.creaturesMap[animal.id]?.pos = selectedFreePos
 
-            for (cr in animal.creaturesMap) {
-                Log.d("Hunting", "${cr.key} - ${cr.value.species.name} [${cr.value.pos.first}, ${cr.value.pos.second}]")
+            if (BuildConfig.DEBUG_LOG) {
+                World.logging(TAG, animal.creaturesMap, animal.waterSpace)
             }
-            for (i in animal.waterSpace.indices) {
-                for (j in animal.waterSpace[i].indices) {
-                    System.out.printf("%02d ", animal.waterSpace[i][j])
-                }
-                println()
-            }
+
             //TODO: decrease penguins numbers
             return true
         }
         return false
+    }
+
+    companion object {
+        val TAG = "Hunting"
     }
 }
