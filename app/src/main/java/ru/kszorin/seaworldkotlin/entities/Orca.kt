@@ -26,7 +26,9 @@ class Orca(id: Int, pos: Pair<Int, Int>) : Animal(id, pos) {
         //try hunting, if unsuccessful - try move
         if (eatingBehaviour.eat(this, findVictims())) {
             timeFromEating = 0
-            Log.d(TAG, "id = $id, success hunting")
+            if (BuildConfig.DEBUG_LOG) {
+                Log.d(TAG, "id = $id, success hunting")
+            }
         } else {
             //TODO: think about dublicate code removing
             if (BuildConfig.DEBUG_LOG) {
