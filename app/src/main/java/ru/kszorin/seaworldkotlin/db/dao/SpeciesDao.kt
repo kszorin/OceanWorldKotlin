@@ -17,6 +17,6 @@ interface SpeciesDao {
     @Query("SELECT * FROM species")
     fun getAll(): List<Species>
 
-    @Query("DELETE * FROM species")
+    @Query("DELETE FROM species")
     fun deleteAll()
 }

@@ -11,7 +11,7 @@ import android.arch.persistence.room.PrimaryKey
         entity = Species::class,
         parentColumns = arrayOf("id"),
         childColumns = arrayOf("speciesId"))))
-class Animal(
+data class Animal(
         @PrimaryKey
         var id: Int,
         var isAlive: Boolean,

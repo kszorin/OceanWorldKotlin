@@ -7,7 +7,7 @@ import android.arch.persistence.room.PrimaryKey
  * Created on 03.04.2018.
  */
 @Entity
-class Species(
+data class Species(
         @PrimaryKey var id: Int,
         var name: String
 )
