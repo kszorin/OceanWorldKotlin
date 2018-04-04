@@ -1,6 +1,7 @@
 package ru.kszorin.seaworldkotlin.entities
 
 import android.util.Log
+import ru.kszorin.seaworldkotlin.BuildConfig
 import ru.kszorin.seaworldkotlin.SeaWorldApp
 import ru.kszorin.seaworldkotlin.entities.behaviour.IEatingBehaviour
 import ru.kszorin.seaworldkotlin.entities.behaviour.IMovingBehaviour
@@ -25,6 +26,9 @@ abstract class Animal(id: Int, pos: Pair<Int, Int>) : Creature(id, pos) {
 
     var age = 0
     var timeFromEating = 0
+    var isAlive = true
+    var childrenNumber = 0
+    var eatenNumber = 0
 
     var reproductionPeriod = 0.toByte()
 
@@ -89,7 +93,9 @@ abstract class Animal(id: Int, pos: Pair<Int, Int>) : Creature(id, pos) {
                     continue
                 } else {
                     if (conditionForAddPosition.apply(waterSpace[i][j])) {
-                        Log.d(TAG, "x = $j, y = $i, id in this position = ${waterSpace[i][j]}")
+                        if (BuildConfig.DEBUG_LOG) {
+                            Log.d(TAG, "x = $j, y = $i, id in this position = ${waterSpace[i][j]}")
+                        }
                         foundPositions.add(Pair(j, i))
                     }
                 }

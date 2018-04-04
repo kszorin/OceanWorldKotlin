@@ -21,10 +21,15 @@ class Hunting: IEatingBehaviour {
             //kill victim and move animal to new position
 
             val victimId = animal.waterSpace[selectedFreePos.second][selectedFreePos.first]
-            Log.d(TAG, "${animal.creaturesMap[animal.id]?.species?.name} (${animal.id})" +
-                    " [${pos.first}, ${pos.second}]: killed ${animal.creaturesMap[victimId]?.species?.name} (${victimId})" +
-                    " [${selectedFreePos.first}, ${selectedFreePos.second}]")
-            animal.creaturesMap.remove(victimId)
+
+            if (BuildConfig.DEBUG_LOG) {
+                Log.d(TAG, "${animal.creaturesMap[animal.id]?.species?.name} (${animal.id})" +
+                        " [${pos.first}, ${pos.second}]: killed ${animal.creaturesMap[victimId]?.species?.name} (${victimId})" +
+                        " [${selectedFreePos.first}, ${selectedFreePos.second}]")
+            }
+
+            (animal.creaturesMap[victimId] as Animal).isAlive = false
+            animal.eatenNumber++
 
             animal.waterSpace[selectedFreePos.second][selectedFreePos.first] = animal.waterSpace[pos.second][pos.first]
             animal.waterSpace[pos.second][pos.first] = World.FREE_WATER_CODE
