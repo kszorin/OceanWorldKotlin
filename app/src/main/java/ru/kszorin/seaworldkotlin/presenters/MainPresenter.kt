@@ -9,6 +9,8 @@ import ru.kszorin.seaworldkotlin.use_cases.SeaWorldInteractor
 import ru.kszorin.seaworldkotlin.use_cases.dto.CurrentStateDto
 import rx.Observable
 import rx.Subscription
+import rx.android.schedulers.AndroidSchedulers
+import rx.functions.Action1
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 
@@ -23,26 +25,33 @@ class MainPresenter : MvpPresenter<IMainView>() {
     private var seaWorldInteractor: ISeaWorldInteractor = SeaWorldInteractor(SeaWorldRepository())
 
     override fun onFirstViewAttach() {
+        Log.d(TAG, "onFirstViewAttach")
         super.onFirstViewAttach()
-        val initData = seaWorldInteractor.fieldInitialization()
-        val currentPosition = seaWorldInteractor.getCurrentPosition()
-        viewState.initField(initData.sizeX, initData.sizeY)
-        viewState.drawWorld(currentPosition.creaturesList)
 
-        obs = seaWorldInteractor.getNextDataObservable(UPDATE_POSITIONS_DELAY)
+        registerSubscription(Observable.create(Observable.OnSubscribe<CurrentStateDto> { subscriber ->
+            seaWorldInteractor.cleanDatabase()
+            seaWorldInteractor.resetGame()
+            subscriber.onNext(seaWorldInteractor.getCurrentPosition())
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(Action1 { currentPosition ->
+                    val initData = seaWorldInteractor.getFieldData()
+                    viewState.initField(initData.sizeX, initData.sizeY, currentPosition.creaturesList)
+                    obs = seaWorldInteractor.getNextDataObservable(UPDATE_POSITIONS_DELAY)
+                }))
     }
 
     fun onTouch() {
         Log.d(TAG, "onTouch")
-        registerSubscription( obs!!
+        registerSubscription(obs!!
                 .subscribeOn(Schedulers.computation())
-                .subscribe({ currentPosition -> viewState.drawWorld(currentPosition.creaturesList) }))
+                .subscribe({ currentPosition -> viewState.updateWorld(currentPosition.creaturesList) }))
     }
 
     fun onReset() {
         seaWorldInteractor.resetGame()
         val currentPosition = seaWorldInteractor.getCurrentPosition()
-        viewState.drawWorld(currentPosition.creaturesList)
+        viewState.updateWorld(currentPosition.creaturesList)
     }
 
     protected fun registerSubscription(subscription: Subscription) {
@@ -66,6 +75,6 @@ class MainPresenter : MvpPresenter<IMainView>() {
 
     companion object {
         private val TAG = "MainPresenter"
-        private val UPDATE_POSITIONS_DELAY = 500L
+        private val UPDATE_POSITIONS_DELAY = 0L
     }
 }

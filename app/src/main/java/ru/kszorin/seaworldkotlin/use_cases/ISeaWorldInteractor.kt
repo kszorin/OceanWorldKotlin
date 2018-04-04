@@ -9,9 +9,11 @@ import rx.Observable
  */
 interface ISeaWorldInteractor {
 
-    fun fieldInitialization(): InitDataDto
+    fun getFieldData(): InitDataDto
 
     fun getNextDataObservable(delay: Long): Observable<CurrentStateDto>
+
+    fun cleanDatabase()
 
     fun getCurrentPosition(): CurrentStateDto
 
