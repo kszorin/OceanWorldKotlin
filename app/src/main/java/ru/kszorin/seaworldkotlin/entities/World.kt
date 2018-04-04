@@ -48,16 +48,6 @@ class World {
         }
     }
 
-    /*    fun nextStep(delay: Long) {
-            for (creature in creaturesMap.values.sortedWith(kotlin.Comparator({ t1, t2 -> t1.compareTo(t2) }))) {
-                if (delay > 0) {
-                    Thread.sleep(delay)
-                }
-                Log.d(TAG, "step was completed on thread ${Thread.currentThread()}")
-                creature?.lifeStep()
-            }
-        }*/
-
     private fun occupyFreePosition(id: Int): Pair<Int, Int> {
         var randomPos: Int
         var posCandidate: Pair<Int, Int>
