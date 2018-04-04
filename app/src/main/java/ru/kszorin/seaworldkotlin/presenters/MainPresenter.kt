@@ -24,6 +24,8 @@ class MainPresenter : MvpPresenter<IMainView>() {
 
     private var seaWorldInteractor: ISeaWorldInteractor = SeaWorldInteractor(SeaWorldRepository())
 
+    private var inProgressFlag = false
+
     override fun onFirstViewAttach() {
         Log.d(TAG, "onFirstViewAttach")
         super.onFirstViewAttach()
@@ -43,15 +45,28 @@ class MainPresenter : MvpPresenter<IMainView>() {
 
     fun onTouch() {
         Log.d(TAG, "onTouch")
-        registerSubscription(obs!!
-                .subscribeOn(Schedulers.computation())
-                .subscribe({ currentPosition -> viewState.updateWorld(currentPosition.creaturesList) }))
+        if (!inProgressFlag) {
+            inProgressFlag = true
+            registerSubscription(obs!!
+                    .subscribeOn(Schedulers.computation())
+                    .subscribe({ currentPosition -> viewState.updateWorld(currentPosition.creaturesList) },
+                            { t -> },
+                            { inProgressFlag = false }))
+        }
     }
 
     fun onReset() {
-        seaWorldInteractor.resetGame()
-        val currentPosition = seaWorldInteractor.getCurrentPosition()
-        viewState.updateWorld(currentPosition.creaturesList)
+
+        registerSubscription(Observable.create(Observable.OnSubscribe<CurrentStateDto> { subscriber ->
+            seaWorldInteractor.cleanDatabase()
+            seaWorldInteractor.resetGame()
+            inProgressFlag = false
+            subscriber.onNext(seaWorldInteractor.getCurrentPosition())
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(Action1 { currentPosition ->
+                    viewState.updateWorld(currentPosition.creaturesList)
+                }))
     }
 
     protected fun registerSubscription(subscription: Subscription) {
