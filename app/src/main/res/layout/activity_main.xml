@@ -9,8 +9,8 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <ru.kszorin.seaworldkotlin.ui.PlayingWorldView
-            android:id="@+id/playing_world_view"
+        <FrameLayout
+            android:id="@+id/playing_world_view_frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="90"/>

@@ -28,18 +28,9 @@ class MainActivity : MvpActivity(), IMainView {
         binding = DataBindingUtil.inflate(layoutInflater, R.layout.activity_main, null, false)
         setContentView(binding.getRoot())
 
-        playingWorldView = binding.playingWorldView
         binding.resetGameButton.setOnClickListener(View.OnClickListener {
             presenter.onReset()
         })
-
-        playingWorldView.setOnTouchListener(View.OnTouchListener({ view, motionEvent ->
-            val action = motionEvent.getAction()
-            if (action == MotionEvent.ACTION_DOWN) {
-                presenter.onTouch()
-            }
-            true
-        }))
     }
 
     override fun onPause() {
@@ -47,12 +38,23 @@ class MainActivity : MvpActivity(), IMainView {
         presenter.onReset()
     }
 
-    override fun initField(fieldSizeX: Int, fieldSizeY: Int) {
+    override fun initField(fieldSizeX: Int, fieldSizeY: Int, creaturesList: List<CreatureStepData>) {
+        Log.d(TAG, "initField")
+        playingWorldView = PlayingWorldView(this)
         playingWorldView.fieldSizeX = fieldSizeX
         playingWorldView.fieldSizeY = fieldSizeY
+        playingWorldView.creaturesList = creaturesList
+        playingWorldView.setOnTouchListener(View.OnTouchListener({ view, motionEvent ->
+            val action = motionEvent.getAction()
+            if (action == MotionEvent.ACTION_DOWN) {
+                presenter.onTouch()
+            }
+            true
+        }))
+        binding.playingWorldViewFrame.addView(playingWorldView)
     }
 
-    override fun drawWorld(creaturesList: List<CreatureStepData>) {
+    override fun updateWorld(creaturesList: List<CreatureStepData>) {
         playingWorldView.creaturesList = creaturesList
     }
 

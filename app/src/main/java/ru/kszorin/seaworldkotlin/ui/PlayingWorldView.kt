@@ -2,7 +2,6 @@ package ru.kszorin.seaworldkotlin.ui
 
 import android.content.Context
 import android.graphics.*
-import android.util.AttributeSet
 import android.util.Log
 import android.view.SurfaceHolder
 import android.view.SurfaceView
@@ -17,8 +16,8 @@ import rx.schedulers.Schedulers
 /**
  * Created on 28.03.2018.
  */
-class PlayingWorldView(context: Context, attrs: AttributeSet)
-    : SurfaceView(context, attrs), SurfaceHolder.Callback {
+class PlayingWorldView(context: Context)
+    : SurfaceView(context), SurfaceHolder.Callback {
 
     //region field
     var fieldSizeX = 0

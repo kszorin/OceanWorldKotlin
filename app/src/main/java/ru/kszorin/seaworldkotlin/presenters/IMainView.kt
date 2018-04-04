@@ -12,7 +12,7 @@ import ru.kszorin.seaworldkotlin.use_cases.dto.CreatureStepData
 @StateStrategyType(SkipStrategy::class)
 interface IMainView: MvpView {
 
-    fun initField(fieldSizeX: Int, fieldSizeY: Int)
+    fun initField(fieldSizeX: Int, fieldSizeY: Int, creaturesList: List<CreatureStepData>)
 
-    fun drawWorld(creaturesList: List<CreatureStepData>)
+    fun updateWorld(creaturesList: List<CreatureStepData>)
 }
