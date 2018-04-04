@@ -1,8 +1,13 @@
 package ru.kszorin.seaworldkotlin
 
 import android.app.Application
+import android.arch.persistence.room.Room
+import ru.kszorin.seaworldkotlin.db.SeaWorldDb
+import ru.kszorin.seaworldkotlin.di.components.DaggerDbComponent
 import ru.kszorin.seaworldkotlin.di.components.DaggerModelsComponent
+import ru.kszorin.seaworldkotlin.di.components.DbComponent
 import ru.kszorin.seaworldkotlin.di.components.ModelsComponent
+import ru.kszorin.seaworldkotlin.di.modules.DbModule
 import ru.kszorin.seaworldkotlin.di.modules.WorldModule
 import ru.kszorin.seaworldkotlin.entities.World
 
@@ -14,16 +19,30 @@ class SeaWorldApp : Application() {
     override fun onCreate() {
         super.onCreate()
         modelsComponent = buildModelsComponent()
+        dbComponent = buildDbComponent()
     }
 
-    fun buildModelsComponent(): ModelsComponent {
+    private fun buildModelsComponent(): ModelsComponent {
         return DaggerModelsComponent
                 .builder()
                 .worldModule(WorldModule(World.Companion.FIELD_SIZE_X, World.Companion.FIELD_SIZE_Y))
                 .build()
     }
 
+    private fun buildDbComponent(): DbComponent {
+        return DaggerDbComponent
+                .builder()
+                .dbModule(DbModule(Room.databaseBuilder(
+                        applicationContext,
+                        SeaWorldDb::class.java,
+                        "seaworld-database")
+                        .build()))
+                .build()
+    }
+
     companion object {
         var modelsComponent: ModelsComponent? = null
+
+        var dbComponent: DbComponent? = null
     }
 }
