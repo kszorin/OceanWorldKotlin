@@ -2,6 +2,7 @@ package ru.kszorin.seaworldkotlin
 
 import android.app.Application
 import android.arch.persistence.room.Room
+import com.facebook.stetho.Stetho
 import ru.kszorin.seaworldkotlin.db.SeaWorldDb
 import ru.kszorin.seaworldkotlin.di.components.DaggerDbComponent
 import ru.kszorin.seaworldkotlin.di.components.DaggerModelsComponent
@@ -18,6 +19,7 @@ class SeaWorldApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        Stetho.initializeWithDefaults(this);
         modelsComponent = buildModelsComponent()
         dbComponent = buildDbComponent()
     }
