@@ -2,18 +2,18 @@ package ru.kszorin.seaworldkotlin.di.modules
 
 import dagger.Module
 import dagger.Provides
-import ru.kszorin.seaworldkotlin.db.SeaWorldDb
+import ru.kszorin.seaworldkotlin.db.SeaWorldRoomDatabase
 import javax.inject.Singleton
 
 /**
  * Created on 03.04.2018.
  */
 @Module
-class DbModule(val database: SeaWorldDb) {
+class DbModule(val roomDatabase: SeaWorldRoomDatabase) {
 
     @Provides
     @Singleton
-    fun provideDatabase(): SeaWorldDb {
-        return database
+    fun provideDatabase(): SeaWorldRoomDatabase {
+        return roomDatabase
     }
 }

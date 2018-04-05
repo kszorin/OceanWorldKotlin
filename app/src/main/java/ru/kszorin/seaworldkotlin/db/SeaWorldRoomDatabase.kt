@@ -11,7 +11,7 @@ import ru.kszorin.seaworldkotlin.db.entities.Species
  * Created on 03.04.2018.
  */
 @Database(entities = arrayOf(Animal::class, Species::class), version = 1)
-abstract class SeaWorldDb: RoomDatabase()  {
+abstract class SeaWorldRoomDatabase : RoomDatabase()  {
 
     abstract fun getAnimalDao(): AnimalDao
 

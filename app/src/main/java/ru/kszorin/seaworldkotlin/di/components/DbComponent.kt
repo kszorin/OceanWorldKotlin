@@ -1,8 +1,8 @@
 package ru.kszorin.seaworldkotlin.di.components
 
 import dagger.Component
+import ru.kszorin.seaworldkotlin.db.SeaWorldDatabase
 import ru.kszorin.seaworldkotlin.di.modules.DbModule
-import ru.kszorin.seaworldkotlin.repositories.SeaWorldRepository
 import javax.inject.Singleton
 
 /**
@@ -13,5 +13,5 @@ import javax.inject.Singleton
 @Singleton
 interface DbComponent {
 
-    fun inject(seaWorldRepository: SeaWorldRepository)
+    fun inject(seaWorldDatabase: SeaWorldDatabase)
 }

@@ -3,7 +3,7 @@ package ru.kszorin.seaworldkotlin
 import android.app.Application
 import android.arch.persistence.room.Room
 import com.facebook.stetho.Stetho
-import ru.kszorin.seaworldkotlin.db.SeaWorldDb
+import ru.kszorin.seaworldkotlin.db.SeaWorldRoomDatabase
 import ru.kszorin.seaworldkotlin.di.components.DaggerDbComponent
 import ru.kszorin.seaworldkotlin.di.components.DaggerModelsComponent
 import ru.kszorin.seaworldkotlin.di.components.DbComponent
@@ -36,8 +36,8 @@ class SeaWorldApp : Application() {
                 .builder()
                 .dbModule(DbModule(Room.databaseBuilder(
                         applicationContext,
-                        SeaWorldDb::class.java,
-                        "seaworld-database")
+                        SeaWorldRoomDatabase::class.java,
+                        "seaworld-roomDatabase")
                         .build()))
                 .build()
     }

@@ -1,9 +1,7 @@
 package ru.kszorin.seaworldkotlin.repositories
 
-import android.util.Log
-import ru.kszorin.seaworldkotlin.SeaWorldApp
-import ru.kszorin.seaworldkotlin.db.SeaWorldDb
-import ru.kszorin.seaworldkotlin.db.entities.Species
+import ru.kszorin.seaworldkotlin.db.ISeaWorldDatabase
+import ru.kszorin.seaworldkotlin.db.SeaWorldDatabase
 import ru.kszorin.seaworldkotlin.entities.Animal
 import ru.kszorin.seaworldkotlin.entities.Creature
 import ru.kszorin.seaworldkotlin.entities.Orca
@@ -13,7 +11,6 @@ import ru.kszorin.seaworldkotlin.use_cases.dto.CreatureStepData
 import ru.kszorin.seaworldkotlin.use_cases.dto.CurrentStateDto
 import ru.kszorin.seaworldkotlin.use_cases.dto.InitDataDto
 import rx.Observable
-import javax.inject.Inject
 
 /**
  * Created on 28.03.2018.
@@ -23,25 +20,14 @@ class SeaWorldRepository : ISeaWorldRepository {
 
     var nextStepFlag = false
 
-    @Inject
-    lateinit var seaWorldDb: SeaWorldDb
-
-    init {
-        SeaWorldApp.dbComponent?.inject(this)
-    }
+    private var seaWorldDatabase: ISeaWorldDatabase = SeaWorldDatabase()
 
     override fun getFieldData(): InitDataDto {
         return InitDataDto(World.FIELD_SIZE_X, World.FIELD_SIZE_Y)
     }
 
     override fun cleanDatabase() {
-        seaWorldDb.getAnimalDao().deleteAll()
-        seaWorldDb.getSpeciesDao().deleteAll()
-
-        seaWorldDb.getSpeciesDao().insert(Species(Creature.Companion.Species.ORCA.ordinal, "Orca"))
-        seaWorldDb.getSpeciesDao().insert(Species(Creature.Companion.Species.PENGUIN.ordinal, "Penguin"))
-
-        Log.d(TAG, "Database is empty")
+        seaWorldDatabase.cleanDatabase()
     }
 
     override fun getNextStepObservable(delay: Long): Observable<CurrentStateDto> {
@@ -92,18 +78,7 @@ class SeaWorldRepository : ISeaWorldRepository {
                 }
 
                 //insert data to DB
-                val animal = ru.kszorin.seaworldkotlin.db.entities.Animal(
-                        creature.id,
-                        creature.isAlive,
-                        creature.age,
-                        creature.childrenNumber,
-                        creature.eatenNumber,
-                        creature.species.ordinal
-                )
-
-                if (seaWorldDb.getAnimalDao().update(animal) == 0) {
-                    seaWorldDb.getAnimalDao().insert(animal)
-                }
+                seaWorldDatabase.updateAnimal(creature)
             }
 
             //add alive animal in list only
