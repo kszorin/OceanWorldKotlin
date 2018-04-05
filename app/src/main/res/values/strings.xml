@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">SeaWorldKotlin</string>
     <string name="reset_game">Restart</string>
+    <string name="action_statistics">Statistics</string>
 </resources>

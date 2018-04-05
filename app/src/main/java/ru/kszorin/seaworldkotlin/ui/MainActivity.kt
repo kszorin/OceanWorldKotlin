@@ -3,9 +3,11 @@ package ru.kszorin.seaworldkotlin.ui
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
-import com.arellomobile.mvp.MvpActivity
+import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import ru.kszorin.seaworldkotlin.R
 import ru.kszorin.seaworldkotlin.databinding.ActivityMainBinding
@@ -13,7 +15,7 @@ import ru.kszorin.seaworldkotlin.presenters.IMainView
 import ru.kszorin.seaworldkotlin.presenters.MainPresenter
 import ru.kszorin.seaworldkotlin.use_cases.dto.CreatureStepData
 
-class MainActivity : MvpActivity(), IMainView {
+class MainActivity : MvpAppCompatActivity(), IMainView {
 
     lateinit private var binding: ActivityMainBinding
 
@@ -27,10 +29,23 @@ class MainActivity : MvpActivity(), IMainView {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.inflate(layoutInflater, R.layout.activity_main, null, false)
         setContentView(binding.getRoot())
+        setSupportActionBar(binding.toolbar)
 
-        binding.resetGameButton.setOnClickListener(View.OnClickListener {
+        binding.contentMain!!.resetGameButton.setOnClickListener(View.OnClickListener {
             presenter.onReset()
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_statistics -> true
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onPause() {
@@ -51,7 +66,7 @@ class MainActivity : MvpActivity(), IMainView {
             }
             true
         }))
-        binding.playingWorldViewFrame.addView(playingWorldView)
+        binding.contentMain!!.playingWorldViewFrame.addView(playingWorldView)
     }
 
     override fun updateWorld(creaturesList: List<CreatureStepData>) {
