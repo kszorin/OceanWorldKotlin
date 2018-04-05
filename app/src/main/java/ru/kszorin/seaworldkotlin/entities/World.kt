@@ -71,7 +71,7 @@ class World {
 
         fun logging(tag: String, creaturesMap: MutableMap<Int, Creature>, waterSpace: Array<IntArray>) {
             for (cr in creaturesMap) {
-                Log.d("Hunting", "${cr.key} - ${cr.value.species.name} [${cr.value.pos.first}, ${cr.value.pos.second}]")
+                Log.d(tag, "${cr.key} - ${cr.value.species.name} [${cr.value.pos.first}, ${cr.value.pos.second}]")
             }
             for (i in waterSpace.indices) {
                 for (j in waterSpace[i].indices) {

@@ -69,10 +69,10 @@ class PlayingWorldView(context: Context)
 
     override fun surfaceCreated(p0: SurfaceHolder?) {
         Log.d(TAG, "surfaceCreated")
-        drawWorld(p0!!, creaturesList)
+        drawWorld(p0!!)
     }
 
-    fun drawWorld(holder: SurfaceHolder, creaturesList: List<CreatureStepData>) {
+    fun drawWorld(holder: SurfaceHolder) {
         var canvas: Canvas? = null
 
         drawWorldSubscription = Completable.fromAction(Action0 {
