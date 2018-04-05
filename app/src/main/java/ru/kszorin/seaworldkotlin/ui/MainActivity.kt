@@ -73,16 +73,16 @@ class MainActivity : MvpAppCompatActivity(), IMainView {
     }
 
     override fun openStatistics(statisticsDto: StatisticsDto) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        startActivity(StatisticsActivity.createIntent(this, statisticsDto))
     }
 
     override fun onPause() {
-        super.onPause()
+        Log.d(TAG, "onPause")
         presenter.onReset()
+        super.onPause()
     }
 
     companion object {
         private val TAG = "MainActivity"
-
     }
 }
