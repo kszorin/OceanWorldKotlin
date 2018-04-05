@@ -2,6 +2,7 @@ package ru.kszorin.seaworldkotlin.use_cases
 
 import ru.kszorin.seaworldkotlin.use_cases.dto.CurrentStateDto
 import ru.kszorin.seaworldkotlin.use_cases.dto.InitDataDto
+import ru.kszorin.seaworldkotlin.use_cases.dto.StatisticsDto
 import rx.Observable
 
 /**
@@ -27,5 +28,9 @@ class SeaWorldInteractor(val seaWorldRepository: ISeaWorldRepository): ISeaWorld
 
     override fun resetGame() {
         seaWorldRepository.resetGame()
+    }
+
+    override fun getStatisticsObservable(): Observable<StatisticsDto> {
+        return seaWorldRepository.getStatisticsObservable()
     }
 }

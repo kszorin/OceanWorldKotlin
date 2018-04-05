@@ -14,6 +14,7 @@ import ru.kszorin.seaworldkotlin.databinding.ActivityMainBinding
 import ru.kszorin.seaworldkotlin.presenters.IMainView
 import ru.kszorin.seaworldkotlin.presenters.MainPresenter
 import ru.kszorin.seaworldkotlin.use_cases.dto.CreatureStepData
+import ru.kszorin.seaworldkotlin.use_cases.dto.StatisticsDto
 
 class MainActivity : MvpAppCompatActivity(), IMainView {
 
@@ -28,10 +29,10 @@ class MainActivity : MvpAppCompatActivity(), IMainView {
         Log.d(TAG, "onCreate")
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.inflate(layoutInflater, R.layout.activity_main, null, false)
-        setContentView(binding.getRoot())
+        setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
 
-        binding.contentMain!!.resetGameButton.setOnClickListener(View.OnClickListener {
+        binding.contentMain!!.resetGameButton.setOnClickListener({
             presenter.onReset()
         })
     }
@@ -43,14 +44,12 @@ class MainActivity : MvpAppCompatActivity(), IMainView {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_statistics -> true
+            R.id.action_statistics -> {
+                presenter.onStatisticsItem()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        presenter.onReset()
     }
 
     override fun initField(fieldSizeX: Int, fieldSizeY: Int, creaturesList: List<CreatureStepData>) {
@@ -71,6 +70,15 @@ class MainActivity : MvpAppCompatActivity(), IMainView {
 
     override fun updateWorld(creaturesList: List<CreatureStepData>) {
         playingWorldView.creaturesList = creaturesList
+    }
+
+    override fun openStatistics(statisticsDto: StatisticsDto) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onPause() {
+        super.onPause()
+        presenter.onReset()
     }
 
     companion object {

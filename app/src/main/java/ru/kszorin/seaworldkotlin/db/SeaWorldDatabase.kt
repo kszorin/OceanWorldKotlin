@@ -5,6 +5,8 @@ import ru.kszorin.seaworldkotlin.SeaWorldApp
 import ru.kszorin.seaworldkotlin.db.entities.Species
 import ru.kszorin.seaworldkotlin.entities.Animal
 import ru.kszorin.seaworldkotlin.entities.Creature
+import ru.kszorin.seaworldkotlin.use_cases.dto.StatisticsDto
+import ru.kszorin.seaworldkotlin.use_cases.dto.StatisticsRecord
 import javax.inject.Inject
 
 /**
@@ -42,6 +44,27 @@ class SeaWorldDatabase : ISeaWorldDatabase {
         if (seaWorldRoomDatabase.getAnimalDao().update(animalDb) == 0) {
             seaWorldRoomDatabase.getAnimalDao().insert(animalDb)
         }
+    }
+
+    override fun getStatistics(): StatisticsDto {
+        val animalsList = seaWorldRoomDatabase.getAnimalDao().getAll()
+        var statisticsRecordList = mutableListOf<StatisticsRecord>()
+
+        for (animal in animalsList) {
+            val species = when (animal.speciesId) {
+                Creature.Companion.Species.ORCA.ordinal -> Creature.Companion.Species.ORCA.name
+                else -> Creature.Companion.Species.PENGUIN.name
+            }
+            statisticsRecordList.add(StatisticsRecord(
+                    animal.id,
+                    species,
+                    animal.age,
+                    animal.isAlive,
+                    animal.childrenNumber,
+                    animal.eatenNumber
+            ))
+        }
+        return StatisticsDto(statisticsRecordList)
     }
 
     companion object {

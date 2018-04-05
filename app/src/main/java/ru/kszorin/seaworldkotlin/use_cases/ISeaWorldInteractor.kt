@@ -2,6 +2,7 @@ package ru.kszorin.seaworldkotlin.use_cases
 
 import ru.kszorin.seaworldkotlin.use_cases.dto.CurrentStateDto
 import ru.kszorin.seaworldkotlin.use_cases.dto.InitDataDto
+import ru.kszorin.seaworldkotlin.use_cases.dto.StatisticsDto
 import rx.Observable
 
 /**
@@ -18,4 +19,6 @@ interface ISeaWorldInteractor {
     fun getCurrentPosition(): CurrentStateDto
 
     fun resetGame()
+
+    fun getStatisticsObservable(): Observable<StatisticsDto>
 }

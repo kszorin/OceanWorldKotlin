@@ -69,7 +69,15 @@ class MainPresenter : MvpPresenter<IMainView>() {
                 }))
     }
 
-    protected fun registerSubscription(subscription: Subscription) {
+    fun onStatisticsItem() {
+        registerSubscription(seaWorldInteractor
+                .getStatisticsObservable()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(Action1 { statisticsDto -> viewState.openStatistics(statisticsDto) }))
+    }
+
+    private fun registerSubscription(subscription: Subscription) {
         if (compositeSubscription == null) {
             compositeSubscription = CompositeSubscription()
         }

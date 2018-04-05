@@ -10,6 +10,7 @@ import ru.kszorin.seaworldkotlin.use_cases.ISeaWorldRepository
 import ru.kszorin.seaworldkotlin.use_cases.dto.CreatureStepData
 import ru.kszorin.seaworldkotlin.use_cases.dto.CurrentStateDto
 import ru.kszorin.seaworldkotlin.use_cases.dto.InitDataDto
+import ru.kszorin.seaworldkotlin.use_cases.dto.StatisticsDto
 import rx.Observable
 
 /**
@@ -93,6 +94,13 @@ class SeaWorldRepository : ISeaWorldRepository {
             }
         }
         return CurrentStateDto(creaturesList)
+    }
+
+    override fun getStatisticsObservable(): Observable<StatisticsDto> {
+        return Observable.create(Observable.OnSubscribe<StatisticsDto> { subscriber ->
+            subscriber.onNext(seaWorldDatabase.getStatistics())
+            subscriber.onCompleted()
+        })
     }
 
     override fun resetGame() {
