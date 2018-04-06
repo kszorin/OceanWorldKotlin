@@ -73,12 +73,13 @@ class MainActivity : MvpAppCompatActivity(), IMainView {
     }
 
     override fun openStatistics(statisticsDto: StatisticsDto) {
+        playingWorldView.drawWorldFlag = false
         startActivity(StatisticsActivity.createIntent(this, statisticsDto))
     }
 
     override fun onPause() {
         Log.d(TAG, "onPause")
-        presenter.onReset()
+        //presenter.onReset()
         super.onPause()
     }
 

@@ -7,12 +7,12 @@
         android:layout_height="match_parent"
         tools:context="ru.kszorin.seaworldkotlin.ui.StatisticsActivity">
 
-        <!--<android.support.v7.widget.RecyclerView
-            android:id="@+id/statistics"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_statistics"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
         </android.support.v7.widget.RecyclerView>
--->
+
     </android.support.constraint.ConstraintLayout>
 </layout>
