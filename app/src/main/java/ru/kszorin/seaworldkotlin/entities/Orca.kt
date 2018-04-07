@@ -1,6 +1,7 @@
 package ru.kszorin.seaworldkotlin.entities
 
 import android.util.Log
+import ru.kszorin.seaworldkotlin.BuildConfig
 import ru.kszorin.seaworldkotlin.entities.behaviour.EnvironsMoving
 import ru.kszorin.seaworldkotlin.entities.behaviour.Hunting
 import ru.kszorin.seaworldkotlin.entities.behaviour.PeriodicReproduction
@@ -25,13 +26,20 @@ class Orca(id: Int, pos: Pair<Int, Int>) : Animal(id, pos) {
         //try hunting, if unsuccessful - try move
         if (eatingBehaviour.eat(this, findVictims())) {
             timeFromEating = 0
-            Log.d(TAG, "id = $id, success hunting")
+            if (BuildConfig.DEBUG_LOG) {
+                Log.d(TAG, "id = $id, success hunting")
+            }
         } else {
             //TODO: think about dublicate code removing
-            Log.d(TAG, "id = $id, success hunting")
+            if (BuildConfig.DEBUG_LOG) {
+                Log.d(TAG, "id = $id, success hunting")
+            }
             val isMove = movingBehaviour.move(this, findFreePlaces())
-            if (isMove) {
-                Log.d(TAG, "id = $id, success moving")
+
+            if (BuildConfig.DEBUG_LOG) {
+                if (isMove) {
+                    Log.d(TAG, "id = $id, success moving")
+                }
             }
             timeFromEating++
         }
@@ -39,10 +47,12 @@ class Orca(id: Int, pos: Pair<Int, Int>) : Animal(id, pos) {
         //check on starving death
         if (timeFromEating >= STARVING_DEATH_PERIOD) {
             waterSpace[pos.second][pos.first] = World.FREE_WATER_CODE
-            creaturesMap.remove(this.id)
+            this.isAlive = false
             //TODO: decrease orcas numbers
-            Log.d(TAG, "${creaturesMap[id]?.species?.name} (${id}):" +
-                    " [${pos.first}, ${pos.second}]: died if hungry!")
+            if (BuildConfig.DEBUG_LOG) {
+                Log.d(TAG, "${creaturesMap[id]?.species?.name} (${id}):" +
+                        " [${pos.first}, ${pos.second}]: died if hungry!")
+            }
         } else {
             //TODO: think about dublicate code removing
             //reproduction

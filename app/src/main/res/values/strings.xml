@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">SeaWorldKotlin</string>
     <string name="reset_game">Restart</string>
+    <string name="menu_item_statistics">Statistics</string>
+    <string name="statistics_header_id">id</string>
+    <string name="statistics_header_species">species</string>
+    <string name="statistics_header_age">age</string>
+    <string name="statistics_header_isAlive">alive</string>
+    <string name="statistics_header_childrenNumber">children</string>
+    <string name="statistics_header_eatenNumber">victims</string>
 </resources>

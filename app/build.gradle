@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 26
     def debugLog = false
@@ -44,11 +46,14 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
+    compile 'com.android.support:support-v4:26.1.0'
+    compile 'com.android.support:design:26.1.0'
+
     kapt 'com.android.databinding:compiler:3.0.0'
 
     // Moxy
     compile 'com.arello-mobile:moxy:1.5.3'
-    compile 'com.arello-mobile:moxy-android:1.5.3'
+    compile 'com.arello-mobile:moxy-app-compat:1.5.3'
     kapt 'com.arello-mobile:moxy-compiler:1.5.3'
 
     // Dagger2
@@ -59,6 +64,10 @@ dependencies {
     compile 'io.reactivex:rxjava:1.1.6'
     compile 'io.reactivex:rxjava-joins:0.22.0'
     compile 'io.reactivex:rxandroid:1.2.1'
+
+    //room
+    compile "android.arch.persistence.room:runtime:1.0.0"
+    kapt "android.arch.persistence.room:compiler:1.0.0"
 
     // Stetho (DB diagnostic)
     compile 'com.facebook.stetho:stetho:1.5.0'

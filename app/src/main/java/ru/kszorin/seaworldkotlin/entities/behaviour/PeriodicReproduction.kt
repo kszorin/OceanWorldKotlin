@@ -11,7 +11,7 @@ import javax.inject.Inject
 /**
  * Created on 23.02.2018.
  */
-class PeriodicReproduction: IReproductionBehaviour {
+class PeriodicReproduction : IReproductionBehaviour {
 
     @Inject
     lateinit var creaturesIdCounter: CreaturesIdCounter
@@ -33,14 +33,15 @@ class PeriodicReproduction: IReproductionBehaviour {
             animal.creaturesMap.put(creaturesIdCounter.counter, baby)
             animal.waterSpace[selectedFreePos.second][selectedFreePos.first] = creaturesIdCounter.counter
 
-            Log.d(TAG, "${animal.creaturesMap[animal.id]?.species?.name} (${animal.id})" +
-                    " [${pos.first}, ${pos.second}]: produced ${animal.creaturesMap[creaturesIdCounter.counter]?.species?.name}" +
-                    "(${baby.id}) [${baby.pos.first}, ${baby.pos.second}]")
-
             if (BuildConfig.DEBUG_LOG) {
+                Log.d(TAG, "${animal.creaturesMap[animal.id]?.species?.name} (${animal.id})" +
+                        " [${pos.first}, ${pos.second}]: produced ${animal.creaturesMap[creaturesIdCounter.counter]?.species?.name}" +
+                        "(${baby.id}) [${baby.pos.first}, ${baby.pos.second}]")
+
                 World.logging(TAG, animal.creaturesMap, animal.waterSpace)
             }
 
+            animal.childrenNumber++
             creaturesIdCounter.counter++
             return true
         }

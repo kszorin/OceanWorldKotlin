@@ -2,6 +2,7 @@ package ru.kszorin.seaworldkotlin.use_cases
 
 import ru.kszorin.seaworldkotlin.use_cases.dto.CurrentStateDto
 import ru.kszorin.seaworldkotlin.use_cases.dto.InitDataDto
+import ru.kszorin.seaworldkotlin.use_cases.dto.StatisticsDto
 import rx.Observable
 
 /**
@@ -9,13 +10,16 @@ import rx.Observable
  */
 class SeaWorldInteractor(val seaWorldRepository: ISeaWorldRepository): ISeaWorldInteractor {
 
-    override fun fieldInitialization(): InitDataDto {
-        resetGame()
+    override fun getFieldData(): InitDataDto {
         return seaWorldRepository.getFieldData()
     }
 
     override fun getNextDataObservable(delay: Long): Observable<CurrentStateDto> {
         return seaWorldRepository.getNextStepObservable(delay)
+    }
+
+    override fun cleanDatabase() {
+        seaWorldRepository.cleanDatabase()
     }
 
     override fun getCurrentPosition(): CurrentStateDto {
@@ -24,5 +28,9 @@ class SeaWorldInteractor(val seaWorldRepository: ISeaWorldRepository): ISeaWorld
 
     override fun resetGame() {
         seaWorldRepository.resetGame()
+    }
+
+    override fun getStatisticsObservable(): Observable<StatisticsDto> {
+        return seaWorldRepository.getStatisticsObservable()
     }
 }

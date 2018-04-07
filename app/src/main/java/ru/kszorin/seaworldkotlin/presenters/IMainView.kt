@@ -4,6 +4,7 @@ import com.arellomobile.mvp.MvpView
 import com.arellomobile.mvp.viewstate.strategy.SkipStrategy
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 import ru.kszorin.seaworldkotlin.use_cases.dto.CreatureStepData
+import ru.kszorin.seaworldkotlin.use_cases.dto.StatisticsDto
 
 
 /**
@@ -12,7 +13,9 @@ import ru.kszorin.seaworldkotlin.use_cases.dto.CreatureStepData
 @StateStrategyType(SkipStrategy::class)
 interface IMainView: MvpView {
 
-    fun initField(fieldSizeX: Int, fieldSizeY: Int)
+    fun initField(fieldSizeX: Int, fieldSizeY: Int, creaturesList: List<CreatureStepData>)
 
-    fun drawWorld(creaturesList: List<CreatureStepData>)
+    fun updateWorld(creaturesList: List<CreatureStepData>)
+
+    fun openStatistics(statisticsDto: StatisticsDto)
 }

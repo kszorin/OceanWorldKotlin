@@ -2,7 +2,6 @@ package ru.kszorin.seaworldkotlin.ui
 
 import android.content.Context
 import android.graphics.*
-import android.util.AttributeSet
 import android.util.Log
 import android.view.SurfaceHolder
 import android.view.SurfaceView
@@ -17,8 +16,8 @@ import rx.schedulers.Schedulers
 /**
  * Created on 28.03.2018.
  */
-class PlayingWorldView(context: Context, attrs: AttributeSet)
-    : SurfaceView(context, attrs), SurfaceHolder.Callback {
+class PlayingWorldView(context: Context)
+    : SurfaceView(context), SurfaceHolder.Callback {
 
     //region field
     var fieldSizeX = 0
@@ -70,10 +69,10 @@ class PlayingWorldView(context: Context, attrs: AttributeSet)
 
     override fun surfaceCreated(p0: SurfaceHolder?) {
         Log.d(TAG, "surfaceCreated")
-        drawWorld(p0!!, creaturesList)
+        drawWorld(p0!!)
     }
 
-    fun drawWorld(holder: SurfaceHolder, creaturesList: List<CreatureStepData>) {
+    fun drawWorld(holder: SurfaceHolder) {
         var canvas: Canvas? = null
 
         drawWorldSubscription = Completable.fromAction(Action0 {
