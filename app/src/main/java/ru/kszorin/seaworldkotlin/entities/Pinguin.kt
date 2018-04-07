@@ -16,9 +16,7 @@ class Pinguin(id : Int, pos : Pair<Int, Int>) : Animal(id, pos) {
     override val movingBehaviour = EnvironsMoving()
     override val reproductionBehaviour = PeriodicReproduction()
 
-    init {
-        reproductionPeriod = REPRODUCTION_PERIOD
-    }
+    override val reproductionPeriod = REPRODUCTION_PERIOD
 
     override fun createBaby(id: Int, pos: Pair<Int, Int>): Animal {
         return Pinguin(id, pos)

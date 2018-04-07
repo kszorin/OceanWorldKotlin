@@ -7,10 +7,13 @@ import ru.kszorin.seaworldkotlin.entities.World
 
 /**
  * Created on 23.02.2018.
+ *
+ * Implements environs moving behaviour.
  */
 class EnvironsMoving: IMovingBehaviour {
 
     override fun move(animal: Animal, foundPositionsInEnvirons: List<Pair<Int, Int>>): Boolean {
+        var result = false
         val pos = animal.pos
 
         if (foundPositionsInEnvirons.isNotEmpty()) {
@@ -29,9 +32,9 @@ class EnvironsMoving: IMovingBehaviour {
                 World.logging(TAG, animal.creaturesMap, animal.waterSpace)
             }
 
-            return true
+            result = true
         }
-        return false
+        return result
     }
 
     companion object {

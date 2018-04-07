@@ -31,8 +31,8 @@ class PlayingWorldView(context: Context)
     //endregion
 
     //region drawing
-    private val orcaBmp = BitmapFactory.decodeResource(resources, Creature.Companion.Species.ORCA.bmpId)
-    private val penguinBmp = BitmapFactory.decodeResource(resources, Creature.Companion.Species.PENGUIN.bmpId)
+    private val orcaBmp = BitmapFactory.decodeResource(resources, Creature.Companion.Species.ORCA.pngId)
+    private val penguinBmp = BitmapFactory.decodeResource(resources, Creature.Companion.Species.PENGUIN.pngId)
 
     private val backgroundPaint = Paint()
     private val linePaint = Paint()
