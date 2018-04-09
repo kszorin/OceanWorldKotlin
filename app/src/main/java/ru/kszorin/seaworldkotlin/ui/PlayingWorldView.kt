@@ -10,7 +10,6 @@ import ru.kszorin.seaworldkotlin.entities.World
 import ru.kszorin.seaworldkotlin.use_cases.dto.CreatureStepData
 import rx.Completable
 import rx.Subscription
-import rx.functions.Action0
 import rx.schedulers.Schedulers
 
 /**
@@ -31,12 +30,11 @@ class PlayingWorldView(context: Context)
     //endregion
 
     //region drawing
-    private val orcaBmp = BitmapFactory.decodeResource(resources, Creature.Companion.Species.ORCA.bmpId)
-    private val penguinBmp = BitmapFactory.decodeResource(resources, Creature.Companion.Species.PENGUIN.bmpId)
+    private val orcaBmp = BitmapFactory.decodeResource(resources, Creature.Companion.Species.ORCA.pngId)
+    private val penguinBmp = BitmapFactory.decodeResource(resources, Creature.Companion.Species.PENGUIN.pngId)
 
     private val backgroundPaint = Paint()
     private val linePaint = Paint()
-    private val textPaint = Paint()
 
     private var textSize = 0
 
@@ -52,9 +50,6 @@ class PlayingWorldView(context: Context)
         getHolder().addCallback(this)
         backgroundPaint.color = Color.WHITE
         linePaint.color = Color.BLACK
-        textPaint.color = Color.BLACK
-        textPaint.textSize = textSize.toFloat()
-
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -63,7 +58,6 @@ class PlayingWorldView(context: Context)
         screenWidth = w
         screenHeight = h
         squareWidth = (screenWidth / World.FIELD_SIZE_X).toFloat()
-        textSize = screenHeight / TEXT_SIZE_DIVISOR
         squareHeight = ((screenHeight - textSize) / World.FIELD_SIZE_Y).toFloat()
     }
 
@@ -72,10 +66,12 @@ class PlayingWorldView(context: Context)
         drawWorld(p0!!)
     }
 
-    fun drawWorld(holder: SurfaceHolder) {
+    //region drawing
+
+    private fun drawWorld(holder: SurfaceHolder) {
         var canvas: Canvas? = null
 
-        drawWorldSubscription = Completable.fromAction(Action0 {
+        drawWorldSubscription = Completable.fromAction({
             drawWorldFlag = true
             while (drawWorldFlag) {
                 try {
@@ -114,7 +110,7 @@ class PlayingWorldView(context: Context)
         }
     }
 
-    fun drawCreature(canvas: Canvas, creatureStepData: CreatureStepData) {
+    private fun drawCreature(canvas: Canvas, creatureStepData: CreatureStepData) {
         var scaleFactor = 1f
         if (creatureStepData.age < BMP_SCALE) {
             scaleFactor = (1f + creatureStepData.age % BMP_SCALE) / BMP_SCALE
@@ -143,7 +139,7 @@ class PlayingWorldView(context: Context)
                     paint)
         }
 
-        //draw creature
+        //draw creatures
         val bmp = when (creatureStepData.species) {
             Creature.Companion.Species.ORCA -> orcaBmp
             Creature.Companion.Species.PENGUIN -> penguinBmp
@@ -154,11 +150,7 @@ class PlayingWorldView(context: Context)
 
     }
 
-    private fun drawStatistic(canvas: Canvas) {
-        //TODO: print statistic
-        //canvas.drawText("O: " + orcasQuantity, 0f, screenHeight.toFloat(), textPaint)
-        //canvas.drawText("P: " + penguinsQuantity, (screenWidth / 2).toFloat(), screenHeight.toFloat(), textPaint)
-    }
+    //endregion
 
     override fun surfaceChanged(p0: SurfaceHolder?, p1: Int, p2: Int, p3: Int) {
         Log.d(TAG, "surfaceChanged")
@@ -169,16 +161,23 @@ class PlayingWorldView(context: Context)
         stopGame()
     }
 
-    fun stopGame() {
+    private fun stopGame() {
         drawWorldFlag = false
         if (drawWorldSubscription != null) {
             drawWorldSubscription!!.unsubscribe()
         }
     }
 
+    override fun performClick(): Boolean {
+        return super.performClick()
+    }
+
     companion object {
         private val TAG = "PlayingWorldView"
-        private val TEXT_SIZE_DIVISOR = 40
+
+        /**
+         * The number stages of animal growth
+         */
         private val BMP_SCALE = 3
     }
 }

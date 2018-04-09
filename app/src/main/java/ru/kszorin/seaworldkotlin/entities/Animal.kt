@@ -11,6 +11,8 @@ import javax.inject.Inject
 
 /**
  * Created on 23.02.2018.
+ *
+ * Class defines alive creatures.
  */
 abstract class Animal(id: Int, pos: Pair<Int, Int>) : Creature(id, pos) {
 
@@ -24,13 +26,13 @@ abstract class Animal(id: Int, pos: Pair<Int, Int>) : Creature(id, pos) {
     @Inject
     lateinit var creaturesMap: MutableMap<Int, Creature>
 
-    var age = 0
     var timeFromEating = 0
+    var age = 0
     var isAlive = true
     var childrenNumber = 0
     var eatenNumber = 0
 
-    var reproductionPeriod = 0.toByte()
+    abstract val reproductionPeriod: Byte
 
     abstract val eatingBehaviour: IEatingBehaviour
     abstract val movingBehaviour: IMovingBehaviour
@@ -106,10 +108,27 @@ abstract class Animal(id: Int, pos: Pair<Int, Int>) : Creature(id, pos) {
     }
 
     override fun lifeStep() {
-        movingBehaviour.move(this, findFreePlaces())
+        moving()
         age++
+        reproduction()
+    }
+
+    fun moving() {
+        val isMove = movingBehaviour.move(this, findFreePlaces())
+
+        if (BuildConfig.DEBUG_LOG) {
+            if (isMove) {
+                Log.d(TAG, "id = $id, success moving")
+            }
+        }
+    }
+
+    fun reproduction() {
         if (age != 0 && 0 == age % reproductionPeriod) {
-            reproductionBehaviour.reproduce(this, findFreePlaces())
+            val isReproduce = reproductionBehaviour.reproduce(this, findFreePlaces())
+            if (isReproduce) {
+                Log.d(TAG, "id = $id, success reproduction")
+            }
         }
     }
 

@@ -7,10 +7,13 @@ import ru.kszorin.seaworldkotlin.entities.World
 
 /**
  * Created on 23.02.2018.
+ *
+ * Implements hunting eating behaviour.
  */
 class Hunting: IEatingBehaviour {
 
     override fun eat(animal: Animal, foundPositionsInEnvirons: List<Pair<Int, Int>>): Boolean {
+        var result = false
         val pos = animal.pos
 
         if (foundPositionsInEnvirons.isNotEmpty()) {
@@ -19,7 +22,6 @@ class Hunting: IEatingBehaviour {
             val selectedFreePos = foundPositionsInEnvirons[bufferRandomNum]
 
             //kill victim and move animal to new position
-
             val victimId = animal.waterSpace[selectedFreePos.second][selectedFreePos.first]
 
             if (BuildConfig.DEBUG_LOG) {
@@ -39,10 +41,10 @@ class Hunting: IEatingBehaviour {
                 World.logging(TAG, animal.creaturesMap, animal.waterSpace)
             }
 
-            //TODO: decrease penguins numbers
-            return true
+            result = true
         }
-        return false
+
+        return result
     }
 
     companion object {

@@ -9,5 +9,5 @@ data class StatisticsRecord(val id: Int,
                             val species: String,
                             val age: Int,
                             val isAlive: Boolean,
-                            val childernNumber: Int,
+                            val childrenNumber: Int,
                             val eatenNumber: Int): Serializable

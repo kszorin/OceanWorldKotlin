@@ -18,9 +18,7 @@ class Orca(id: Int, pos: Pair<Int, Int>) : Animal(id, pos) {
     override val movingBehaviour = EnvironsMoving()
     override val reproductionBehaviour = PeriodicReproduction()
 
-    init {
-        reproductionPeriod = REPRODUCTION_PERIOD
-    }
+    override val reproductionPeriod = REPRODUCTION_PERIOD
 
     override fun lifeStep() {
         //try hunting, if unsuccessful - try move
@@ -30,36 +28,25 @@ class Orca(id: Int, pos: Pair<Int, Int>) : Animal(id, pos) {
                 Log.d(TAG, "id = $id, success hunting")
             }
         } else {
-            //TODO: think about dublicate code removing
-            if (BuildConfig.DEBUG_LOG) {
-                Log.d(TAG, "id = $id, success hunting")
-            }
-            val isMove = movingBehaviour.move(this, findFreePlaces())
-
-            if (BuildConfig.DEBUG_LOG) {
-                if (isMove) {
-                    Log.d(TAG, "id = $id, success moving")
-                }
-            }
             timeFromEating++
+            if (BuildConfig.DEBUG_LOG) {
+                Log.d(TAG, "id = $id, unsuccessful hunting")
+            }
+            moving()
         }
 
         //check on starving death
         if (timeFromEating >= STARVING_DEATH_PERIOD) {
             waterSpace[pos.second][pos.first] = World.FREE_WATER_CODE
             this.isAlive = false
-            //TODO: decrease orcas numbers
             if (BuildConfig.DEBUG_LOG) {
                 Log.d(TAG, "${creaturesMap[id]?.species?.name} (${id}):" +
-                        " [${pos.first}, ${pos.second}]: died if hungry!")
+                        " [${pos.first}, ${pos.second}]: died of hungry!")
             }
         } else {
-            //TODO: think about dublicate code removing
             //reproduction
             age++;
-            if (age != 0 && 0 == age % reproductionPeriod) {
-                reproductionBehaviour.reproduce(this, findFreePlaces())
-            }
+            reproduction()
         }
     }
 

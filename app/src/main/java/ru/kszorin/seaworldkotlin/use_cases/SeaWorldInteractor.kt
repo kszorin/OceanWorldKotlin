@@ -10,27 +10,29 @@ import rx.Observable
  */
 class SeaWorldInteractor(val seaWorldRepository: ISeaWorldRepository): ISeaWorldInteractor {
 
-    override fun getFieldData(): InitDataDto {
-        return seaWorldRepository.getFieldData()
+    override fun getInitData(): InitDataDto {
+        return seaWorldRepository.getFieldParameters()
     }
 
-    override fun getNextDataObservable(delay: Long): Observable<CurrentStateDto> {
+    override fun getResetGameObservable(): Observable<CurrentStateDto> {
+
+        return Observable.create({ subscriber ->
+            seaWorldRepository.cleanDatabase()
+            seaWorldRepository.resetGame()
+
+            subscriber.onNext(seaWorldRepository.getCurrentState())
+            subscriber.onCompleted()
+        })
+    }
+
+    override fun getNextStepObservable(delay: Long): Observable<CurrentStateDto> {
         return seaWorldRepository.getNextStepObservable(delay)
     }
 
-    override fun cleanDatabase() {
-        seaWorldRepository.cleanDatabase()
-    }
-
-    override fun getCurrentPosition(): CurrentStateDto {
-        return seaWorldRepository.getCurrentState()
-    }
-
-    override fun resetGame() {
-        seaWorldRepository.resetGame()
-    }
-
     override fun getStatisticsObservable(): Observable<StatisticsDto> {
-        return seaWorldRepository.getStatisticsObservable()
+        return Observable.create({ subscriber ->
+            subscriber.onNext(seaWorldRepository.getStatistics())
+            subscriber.onCompleted()
+        })
     }
 }

@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import ru.kszorin.seaworldkotlin.R
 import ru.kszorin.seaworldkotlin.databinding.StatisticsRecordBinding
-import ru.kszorin.seaworldkotlin.databinding.StatisticsRecordHeaderBinding
 import ru.kszorin.seaworldkotlin.use_cases.dto.StatisticsRecord
 
 /**
@@ -16,6 +15,7 @@ import ru.kszorin.seaworldkotlin.use_cases.dto.StatisticsRecord
 class StatisticsAdapter(val statisticsRecordList: List<StatisticsRecord>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount(): Int {
+        //add one for header
         return statisticsRecordList.size + 1
     }
 
@@ -40,23 +40,20 @@ class StatisticsAdapter(val statisticsRecordList: List<StatisticsRecord>): Recyc
             species.text = statisticsRecordList[position-1].species
             age.text = statisticsRecordList[position-1].age.toString()
             isAlive.isChecked = statisticsRecordList[position-1].isAlive
-            childrenNumber.text = statisticsRecordList[position-1].childernNumber.toString()
+            childrenNumber.text = statisticsRecordList[position-1].childrenNumber.toString()
             eatenNumber.text = statisticsRecordList[position-1].eatenNumber.toString()
         }
     }
 
     override fun getItemViewType(position: Int): Int {
         return if (0 == position) {
-            return TYPE_HEADER
+            TYPE_HEADER
         } else {
-            return TYPE_ITEM
+            TYPE_ITEM
         }
     }
 
-    class StatisticsHeaderViewHolder(view: View): RecyclerView.ViewHolder(view) {
-
-        val binding = DataBindingUtil.bind<StatisticsRecordHeaderBinding>(itemView)
-    }
+    class StatisticsHeaderViewHolder(view: View): RecyclerView.ViewHolder(view)
 
     class StatisticsViewHolder(view: View): RecyclerView.ViewHolder(view) {
 

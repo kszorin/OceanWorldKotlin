@@ -5,7 +5,6 @@ import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -22,8 +21,6 @@ class StatisticsActivity : MvpAppCompatActivity(), IStatisticsView  {
     lateinit private var binding: ActivityStatisticsBinding
 
     private lateinit var adapter: StatisticsAdapter
-
-    private lateinit var recyclerView: RecyclerView
 
     @InjectPresenter
     lateinit var presenter: StatisticsPresenter

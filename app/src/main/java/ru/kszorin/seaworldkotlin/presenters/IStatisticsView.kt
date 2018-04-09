@@ -10,5 +10,9 @@ import ru.kszorin.seaworldkotlin.use_cases.dto.StatisticsDto
  */
 @StateStrategyType(SkipStrategy::class)
 interface IStatisticsView : MvpView {
+
+    /**
+     * Displays statistics data.
+     */
     fun displayStatistics(statisticsDto: StatisticsDto)
 }

@@ -10,6 +10,8 @@ import javax.inject.Inject
 
 /**
  * Created on 23.02.2018.
+ *
+ * Implements periodic reproduction behaviour.
  */
 class PeriodicReproduction : IReproductionBehaviour {
 
@@ -21,6 +23,7 @@ class PeriodicReproduction : IReproductionBehaviour {
     }
 
     override fun reproduce(animal: Animal, foundPositionsInEnvirons: List<Pair<Int, Int>>): Boolean {
+        var result = false
         val pos = animal.pos
 
         if (foundPositionsInEnvirons.isNotEmpty()) {
@@ -43,9 +46,9 @@ class PeriodicReproduction : IReproductionBehaviour {
 
             animal.childrenNumber++
             creaturesIdCounter.counter++
-            return true
+            result = true
         }
-        return false
+        return result
     }
 
     companion object {

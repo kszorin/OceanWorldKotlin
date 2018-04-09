@@ -13,9 +13,18 @@ import ru.kszorin.seaworldkotlin.use_cases.dto.StatisticsDto
 @StateStrategyType(SkipStrategy::class)
 interface IMainView: MvpView {
 
-    fun initField(fieldSizeX: Int, fieldSizeY: Int, creaturesList: List<CreatureStepData>)
+    /**
+     * Initializes field and places creatures on the field.
+     */
+    fun initField(fieldSize: Pair<Int, Int>, creaturesList: List<CreatureStepData>)
 
-    fun updateWorld(creaturesList: List<CreatureStepData>)
+    /**
+     * Updates field after each animal's step.
+     */
+    fun updateField(creaturesList: List<CreatureStepData>)
 
+    /**
+     * Updates field after each animal's step.
+     */
     fun openStatistics(statisticsDto: StatisticsDto)
 }
