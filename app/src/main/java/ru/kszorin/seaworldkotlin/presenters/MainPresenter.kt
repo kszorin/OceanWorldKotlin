@@ -18,12 +18,19 @@ import rx.subscriptions.CompositeSubscription
  */
 @InjectViewState
 class MainPresenter : MvpPresenter<IMainView>() {
-    private var obs: Observable<CurrentStateDto>? = null
+
+    private var nextStepObservable: Observable<CurrentStateDto>? = null
     private var compositeSubscription: CompositeSubscription? = null
 
+    /**
+     *  Enter point in Use cases layer.
+     */
     private var seaWorldInteractor: ISeaWorldInteractor = SeaWorldInteractor(SeaWorldRepository())
 
-    private var inProgressFlag = false
+    /**
+     * Flag for blocking re-touch during life step.
+     */
+    private var isLifeStepInProgress = false
 
     override fun onFirstViewAttach() {
         Log.d(TAG, "onFirstViewAttach")
@@ -34,19 +41,21 @@ class MainPresenter : MvpPresenter<IMainView>() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ currentPosition ->
                     val initData = seaWorldInteractor.getInitData()
-                    viewState.initField(initData.fieldSize.first, initData.fieldSize.second, currentPosition.creaturesList)
-                    obs = seaWorldInteractor.getNextStepObservable(UPDATE_POSITIONS_DELAY)
+                    viewState.initField(initData.fieldSize, currentPosition.creaturesList)
+                    nextStepObservable = seaWorldInteractor.getNextStepObservable(UPDATE_POSITIONS_DELAY)
                 }))
     }
 
     fun onTouch() {
-        if (!inProgressFlag) {
-            inProgressFlag = true
-            registerSubscription(obs!!
+        if (!isLifeStepInProgress) {
+            isLifeStepInProgress = true
+            registerSubscription(nextStepObservable!!
                     .subscribeOn(Schedulers.computation())
-                    .subscribe({ currentPosition -> viewState.updateWorld(currentPosition.creaturesList) },
+                    .subscribe({ currentPosition -> viewState.updateField(currentPosition.creaturesList) },
                             { t -> },
-                            { inProgressFlag = false }))
+                            {
+                                //reset flag when life step was completed
+                                isLifeStepInProgress = false }))
         }
     }
 
@@ -55,8 +64,8 @@ class MainPresenter : MvpPresenter<IMainView>() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ currentPosition ->
-                    viewState.updateWorld(currentPosition.creaturesList)
-                    inProgressFlag = false
+                    viewState.updateField(currentPosition.creaturesList)
+                    isLifeStepInProgress = false
                 }))
     }
 

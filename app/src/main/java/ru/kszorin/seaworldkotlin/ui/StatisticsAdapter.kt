@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import ru.kszorin.seaworldkotlin.R
 import ru.kszorin.seaworldkotlin.databinding.StatisticsRecordBinding
-import ru.kszorin.seaworldkotlin.databinding.StatisticsRecordHeaderBinding
 import ru.kszorin.seaworldkotlin.use_cases.dto.StatisticsRecord
 
 /**
@@ -16,6 +15,7 @@ import ru.kszorin.seaworldkotlin.use_cases.dto.StatisticsRecord
 class StatisticsAdapter(val statisticsRecordList: List<StatisticsRecord>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount(): Int {
+        //add one for header
         return statisticsRecordList.size + 1
     }
 
@@ -53,10 +53,7 @@ class StatisticsAdapter(val statisticsRecordList: List<StatisticsRecord>): Recyc
         }
     }
 
-    class StatisticsHeaderViewHolder(view: View): RecyclerView.ViewHolder(view) {
-
-        val binding = DataBindingUtil.bind<StatisticsRecordHeaderBinding>(itemView)
-    }
+    class StatisticsHeaderViewHolder(view: View): RecyclerView.ViewHolder(view)
 
     class StatisticsViewHolder(view: View): RecyclerView.ViewHolder(view) {
 

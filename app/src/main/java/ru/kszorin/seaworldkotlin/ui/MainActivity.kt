@@ -1,12 +1,12 @@
 package ru.kszorin.seaworldkotlin.ui
 
+import android.annotation.SuppressLint
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
-import android.view.View
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import ru.kszorin.seaworldkotlin.R
@@ -22,6 +22,9 @@ class MainActivity : MvpAppCompatActivity(), IMainView {
 
     lateinit private var playingWorldView: PlayingWorldView
 
+    /**
+     * Enter point in Presenters layer.
+     */
     @InjectPresenter
     lateinit var presenter: MainPresenter
 
@@ -52,23 +55,24 @@ class MainActivity : MvpAppCompatActivity(), IMainView {
         }
     }
 
-    override fun initField(fieldSizeX: Int, fieldSizeY: Int, creaturesList: List<CreatureStepData>) {
+    @SuppressLint("ClickableViewAccessibility")
+    override fun initField(fieldSize: Pair<Int, Int>, creaturesList: List<CreatureStepData>) {
         Log.d(TAG, "initField")
         playingWorldView = PlayingWorldView(this)
-        playingWorldView.fieldSizeX = fieldSizeX
-        playingWorldView.fieldSizeY = fieldSizeY
+        playingWorldView.fieldSizeX = fieldSize.first
+        playingWorldView.fieldSizeY = fieldSize.second
         playingWorldView.creaturesList = creaturesList
-        playingWorldView.setOnTouchListener(View.OnTouchListener({ view, motionEvent ->
+        playingWorldView.setOnTouchListener({ view, motionEvent ->
             val action = motionEvent.getAction()
             if (action == MotionEvent.ACTION_DOWN) {
                 presenter.onTouch()
             }
             true
-        }))
+        })
         binding.contentMain!!.playingWorldViewFrame.addView(playingWorldView)
     }
 
-    override fun updateWorld(creaturesList: List<CreatureStepData>) {
+    override fun updateField(creaturesList: List<CreatureStepData>) {
         playingWorldView.creaturesList = creaturesList
     }
 
@@ -79,7 +83,6 @@ class MainActivity : MvpAppCompatActivity(), IMainView {
 
     override fun onPause() {
         Log.d(TAG, "onPause")
-        //presenter.onReset()
         super.onPause()
     }
 

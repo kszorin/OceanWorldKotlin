@@ -19,7 +19,11 @@ class SeaWorldApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        Stetho.initializeWithDefaults(this);
+
+        //DB diagnostic
+        Stetho.initializeWithDefaults(this)
+
+        //dagger2
         modelsComponent = buildModelsComponent()
         dbComponent = buildDbComponent()
     }
