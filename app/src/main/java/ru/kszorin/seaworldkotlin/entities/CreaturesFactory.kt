@@ -6,7 +6,7 @@ import ru.kszorin.seaworldkotlin.BuildConfig
 /**
  * Created on 26.02.2018.
  *
- * Simple factory fo creatures create
+ * Simple factory for creatures creattion.
  */
 fun createCreatures(species: Creature.Companion.Species, id: Int, pos: Pair<Int, Int>) : Creature {
     val TAG = "CreaturesFactory"
