@@ -12,11 +12,11 @@ interface AnimalDao {
     @Insert
     fun insert(animal: Animal)
 
-    @Query("SELECT * FROM animal")
-    fun getAll(): List<Animal>
-
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun update(animal: Animal): Int
+
+    @Query("SELECT * FROM animal")
+    fun getAll(): List<Animal>
 
     @Query("DELETE FROM animal")
     fun deleteAll()

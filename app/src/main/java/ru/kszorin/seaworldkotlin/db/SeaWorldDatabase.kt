@@ -5,6 +5,7 @@ import ru.kszorin.seaworldkotlin.SeaWorldApp
 import ru.kszorin.seaworldkotlin.db.entities.Species
 import ru.kszorin.seaworldkotlin.entities.Animal
 import ru.kszorin.seaworldkotlin.entities.Creature
+import ru.kszorin.seaworldkotlin.repositories.ISeaWorldDatabase
 import ru.kszorin.seaworldkotlin.use_cases.dto.StatisticsDto
 import ru.kszorin.seaworldkotlin.use_cases.dto.StatisticsRecord
 import javax.inject.Inject

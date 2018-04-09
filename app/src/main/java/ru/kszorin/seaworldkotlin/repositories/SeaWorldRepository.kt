@@ -1,6 +1,5 @@
 package ru.kszorin.seaworldkotlin.repositories
 
-import ru.kszorin.seaworldkotlin.db.ISeaWorldDatabase
 import ru.kszorin.seaworldkotlin.db.SeaWorldDatabase
 import ru.kszorin.seaworldkotlin.entities.Animal
 import ru.kszorin.seaworldkotlin.entities.Creature
@@ -17,10 +16,19 @@ import rx.Observable
  * Created on 28.03.2018.
  */
 class SeaWorldRepository : ISeaWorldRepository {
+    /**
+     * The enter point in Entity layer.
+     */
     val world = World()
 
+    /**
+     * Flag for interrupt caused by reset.
+     */
     var nextStepFlag = false
 
+    /**
+     * The enter point in Database layer.
+     */
     private var seaWorldDatabase: ISeaWorldDatabase = SeaWorldDatabase()
 
     override fun getFieldParameters(): InitDataDto {
@@ -29,6 +37,11 @@ class SeaWorldRepository : ISeaWorldRepository {
 
     override fun cleanDatabase() {
         seaWorldDatabase.cleanDatabase()
+    }
+
+    override fun resetGame() {
+        nextStepFlag = false
+        world.reset()
     }
 
     override fun getNextStepObservable(delay: Long): Observable<CurrentStateDto> {
@@ -57,9 +70,15 @@ class SeaWorldRepository : ISeaWorldRepository {
     override fun getCurrentState(): CurrentStateDto {
         val creaturesList = mutableListOf<CreatureStepData>()
         for (creature in world.creaturesMap.values) {
+
+            //if creature is not animal => DEFAULT_AGE
             var age = DEFAULT_AGE
+
+            //necessary for color indication
             var isStarvingDeathSoon = false
             var isChildbirthSoon = false
+
+            //add alive animal in list only
             var isAddInList = true
 
             if (creature.species.equals(Creature.Companion.Species.PENGUIN) || creature.species.equals(Creature.Companion.Species.ORCA)) {
@@ -81,7 +100,6 @@ class SeaWorldRepository : ISeaWorldRepository {
                 seaWorldDatabase.updateAnimal(creature)
             }
 
-            //add alive animal in list only
             if (isAddInList) {
                 creaturesList.add(CreatureStepData(
                         creature.species,
@@ -97,11 +115,6 @@ class SeaWorldRepository : ISeaWorldRepository {
 
     override fun getStatistics(): StatisticsDto {
         return seaWorldDatabase.getStatistics()
-    }
-
-    override fun resetGame() {
-        nextStepFlag = false
-        world.reset()
     }
 
     companion object {
