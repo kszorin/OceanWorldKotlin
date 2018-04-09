@@ -40,16 +40,16 @@ class StatisticsAdapter(val statisticsRecordList: List<StatisticsRecord>): Recyc
             species.text = statisticsRecordList[position-1].species
             age.text = statisticsRecordList[position-1].age.toString()
             isAlive.isChecked = statisticsRecordList[position-1].isAlive
-            childrenNumber.text = statisticsRecordList[position-1].childernNumber.toString()
+            childrenNumber.text = statisticsRecordList[position-1].childrenNumber.toString()
             eatenNumber.text = statisticsRecordList[position-1].eatenNumber.toString()
         }
     }
 
     override fun getItemViewType(position: Int): Int {
         return if (0 == position) {
-            return TYPE_HEADER
+            TYPE_HEADER
         } else {
-            return TYPE_ITEM
+            TYPE_ITEM
         }
     }
 

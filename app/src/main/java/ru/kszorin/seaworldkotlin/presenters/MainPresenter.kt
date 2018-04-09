@@ -10,7 +10,6 @@ import ru.kszorin.seaworldkotlin.use_cases.dto.CurrentStateDto
 import rx.Observable
 import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
-import rx.functions.Action1
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 
@@ -30,21 +29,17 @@ class MainPresenter : MvpPresenter<IMainView>() {
         Log.d(TAG, "onFirstViewAttach")
         super.onFirstViewAttach()
 
-        registerSubscription(Observable.create(Observable.OnSubscribe<CurrentStateDto> { subscriber ->
-            seaWorldInteractor.cleanDatabase()
-            seaWorldInteractor.resetGame()
-            subscriber.onNext(seaWorldInteractor.getCurrentPosition())
-        }).subscribeOn(Schedulers.io())
+        registerSubscription(seaWorldInteractor.getResetGameObservable()
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(Action1 { currentPosition ->
-                    val initData = seaWorldInteractor.getFieldData()
-                    viewState.initField(initData.sizeX, initData.sizeY, currentPosition.creaturesList)
-                    obs = seaWorldInteractor.getNextDataObservable(UPDATE_POSITIONS_DELAY)
+                .subscribe({ currentPosition ->
+                    val initData = seaWorldInteractor.getInitData()
+                    viewState.initField(initData.fieldSize.first, initData.fieldSize.second, currentPosition.creaturesList)
+                    obs = seaWorldInteractor.getNextStepObservable(UPDATE_POSITIONS_DELAY)
                 }))
     }
 
     fun onTouch() {
-        Log.d(TAG, "onTouch")
         if (!inProgressFlag) {
             inProgressFlag = true
             registerSubscription(obs!!
@@ -56,16 +51,12 @@ class MainPresenter : MvpPresenter<IMainView>() {
     }
 
     fun onReset() {
-
-        registerSubscription(Observable.create(Observable.OnSubscribe<CurrentStateDto> { subscriber ->
-            seaWorldInteractor.cleanDatabase()
-            seaWorldInteractor.resetGame()
-            inProgressFlag = false
-            subscriber.onNext(seaWorldInteractor.getCurrentPosition())
-        }).subscribeOn(Schedulers.io())
+        registerSubscription(seaWorldInteractor.getResetGameObservable()
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(Action1 { currentPosition ->
+                .subscribe({ currentPosition ->
                     viewState.updateWorld(currentPosition.creaturesList)
+                    inProgressFlag = false
                 }))
     }
 
@@ -74,7 +65,7 @@ class MainPresenter : MvpPresenter<IMainView>() {
                 .getStatisticsObservable()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(Action1 { statisticsDto -> viewState.openStatistics(statisticsDto) }))
+                .subscribe({ statisticsDto -> viewState.openStatistics(statisticsDto) }))
     }
 
     private fun registerSubscription(subscription: Subscription) {
@@ -85,6 +76,7 @@ class MainPresenter : MvpPresenter<IMainView>() {
     }
 
     override fun onDestroy() {
+        Log.d(TAG, "onDestroy")
         clearSubscription()
         super.onDestroy()
     }

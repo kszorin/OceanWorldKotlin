@@ -23,8 +23,8 @@ class SeaWorldRepository : ISeaWorldRepository {
 
     private var seaWorldDatabase: ISeaWorldDatabase = SeaWorldDatabase()
 
-    override fun getFieldData(): InitDataDto {
-        return InitDataDto(World.FIELD_SIZE_X, World.FIELD_SIZE_Y)
+    override fun getFieldParameters(): InitDataDto {
+        return InitDataDto(Pair(World.FIELD_SIZE_X, World.FIELD_SIZE_Y))
     }
 
     override fun cleanDatabase() {
@@ -32,10 +32,9 @@ class SeaWorldRepository : ISeaWorldRepository {
     }
 
     override fun getNextStepObservable(delay: Long): Observable<CurrentStateDto> {
-        return Observable.create(Observable.OnSubscribe<CurrentStateDto> { subscriber ->
+        return Observable.create({ subscriber ->
             nextStepFlag = true
             try {
-
                 for (creature in world.creaturesMap.values.sortedWith(kotlin.Comparator({ t1, t2 -> t1.compareTo(t2) }))) {
                     if (!nextStepFlag) {
                         break
@@ -96,11 +95,8 @@ class SeaWorldRepository : ISeaWorldRepository {
         return CurrentStateDto(creaturesList)
     }
 
-    override fun getStatisticsObservable(): Observable<StatisticsDto> {
-        return Observable.create(Observable.OnSubscribe<StatisticsDto> { subscriber ->
-            subscriber.onNext(seaWorldDatabase.getStatistics())
-            subscriber.onCompleted()
-        })
+    override fun getStatistics(): StatisticsDto {
+        return seaWorldDatabase.getStatistics()
     }
 
     override fun resetGame() {
