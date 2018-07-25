@@ -1,4 +1,4 @@
-# SeaWorldKotlin
+# OceanWorldKotlin
 Тестовое приложение на вакансию Android Developer
 
 ЗАДАЧА: написать приложение “Морской мир”
